@@ -1,1 +1,5355 @@
-{"name":"посты в канал - @gotovimdoma_max","nodes":[{"parameters":{"conditions":{"options":{"caseSensitive":true,"leftValue":"","typeValidation":"strict","version":3},"conditions":[{"id":"b06397a1-2f72-42b6-b4b2-3b774f72b71e","leftValue":"={{ $json.id }}","rightValue":"0","operator":{"type":"number","operation":"notEmpty","singleValue":true}}],"combinator":"and"},"options":{}},"type":"n8n-nodes-base.if","typeVersion":2.3,"position":[-1072,2560],"id":"67bfeb83-b866-4cb9-b5da-32160bfed749","name":"If5"},{"parameters":{"operation":"getAll","tableId":"gotovimdoma_max_post500","limit":1,"matchType":"allFilters","filters":{"conditions":[{"keyName":"status","condition":"eq","keyValue":"new"},{"keyName":"relevant","condition":"eq","keyValue":"true"}]}},"type":"n8n-nodes-base.supabase","typeVersion":1,"position":[-1280,2560],"id":"4eb9a6e5-2d1f-4e7c-a8be-6b36df0ac62f","name":"Get many rows5","alwaysOutputData":true,"retryOnFail":true},{"parameters":{"chatId":"YOUR_TELEGRAM_ADMIN_CHAT_ID","text":"В базе (gotovim_max500) закончились посты","additionalFields":{"appendAttribution":false}},"type":"n8n-nodes-base.telegram","typeVersion":1.2,"position":[-912,2736],"id":"34ab1677-48df-4a62-bf21-77e4af255730","name":"Send a text message3"},{"parameters":{"mode":"combine","combineBy":"combineByPosition","options":{}},"type":"n8n-nodes-base.merge","typeVersion":3.2,"position":[816,2400],"id":"430e2d2f-db04-4e14-aee7-e34405211715","name":"Merge5"},{"parameters":{"chatId":"YOUR_TELEGRAM_ADMIN_CHAT_ID","text":"=Ошибка в  агенте №1 (генерация 1 фото @gorovim_max\nПроверьте биллинг ключа","additionalFields":{}},"type":"n8n-nodes-base.telegram","typeVersion":1.2,"position":[48,2896],"id":"1b41a0a1-279b-4519-a0c2-1ca4a846108c","name":"Error 3"}],"connections":{},"active":false,"settings":{"executionOrder":"v1","binaryMode":"separate"}}
+{
+  "name": "посты в канал - @gotovimdoma_max",
+  "nodes": [
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "b06397a1-2f72-42b6-b4b2-3b774f72b71e",
+              "leftValue": "={{ $json.id }}",
+              "rightValue": "0",
+              "operator": {
+                "type": "number",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        -1072,
+        2560
+      ],
+      "id": "67bfeb83-b866-4cb9-b5da-32160bfed749",
+      "name": "If5"
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "tableId": "gotovimdoma_max_post500",
+        "limit": 1,
+        "matchType": "allFilters",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "status",
+              "condition": "eq",
+              "keyValue": "new"
+            },
+            {
+              "keyName": "relevant",
+              "condition": "eq",
+              "keyValue": "true"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        -1280,
+        2560
+      ],
+      "id": "4eb9a6e5-2d1f-4e7c-a8be-6b36df0ac62f",
+      "name": "Get many rows5",
+      "alwaysOutputData": true,
+      "retryOnFail": true
+    },
+    {
+      "parameters": {
+        "chatId": "YOUR_TELEGRAM_ADMIN_CHAT_ID",
+        "text": "В базе (gotovim_max500) закончились посты",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        -912,
+        2736
+      ],
+      "id": "34ab1677-48df-4a62-bf21-77e4af255730",
+      "name": "Send a text message3"
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        816,
+        2400
+      ],
+      "id": "430e2d2f-db04-4e14-aee7-e34405211715",
+      "name": "Merge5"
+    },
+    {
+      "parameters": {
+        "chatId": "YOUR_TELEGRAM_ADMIN_CHAT_ID",
+        "text": "=Ошибка в  агенте №1 (генерация 1 фото @gorovim_max\nПроверьте биллинг ключа",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        48,
+        2896
+      ],
+      "id": "1b41a0a1-279b-4519-a0c2-1ca4a846108c",
+      "name": "Error 3"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Преобразуй Рецепт:\n{{ $('Get many rows5').item.json.post_text }}",
+        "options": {
+          "systemMessage": "={{ $json['system promt to txt'] }}"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3,
+      "position": [
+        128,
+        2368
+      ],
+      "id": "6f4a46b5-6069-4661-a169-a70abc81d29d",
+      "name": "Post agent 3",
+      "retryOnFail": true,
+      "waitBetweenTries": 4000,
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "tableId": "gotovimdoma_max_post500",
+        "matchType": "allFilters",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "id",
+              "condition": "eq",
+              "keyValue": "={{ $('Get many rows5').item.json.id }}"
+            }
+          ]
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "status",
+              "fieldValue": "done"
+            },
+            {
+              "fieldId": "created_at",
+              "fieldValue": "={{ $now.setZone(\"Europe/Moscow\").toISO() }}\n"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        1168,
+        2400
+      ],
+      "id": "ff680d9a-42ed-4be5-8d47-7bf3fd0c9d47",
+      "name": "done foto2"
+    },
+    {
+      "parameters": {
+        "chatId": "YOUR_TELEGRAM_ADMIN_CHAT_ID",
+        "text": "=Ошибка в  агенте №2 (генерация 1 фото @gorovim_max\nПроверьте биллинг ключа",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        480,
+        2480
+      ],
+      "id": "3311ee4c-b53c-46d3-8e58-5a8d931edbda",
+      "name": "Problem with GoogleAIStudio2"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        -208,
+        2368
+      ],
+      "id": "15034a17-5c0d-4e73-8de8-b3f97ebe88a7",
+      "name": "Wait4"
+    },
+    {
+      "parameters": {
+        "content": "# генерация поста с картинкой",
+        "height": 80,
+        "width": 608,
+        "color": 6
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -1536,
+        2384
+      ],
+      "id": "dae68f9d-2c6c-42fb-8dd7-742a888ca1aa",
+      "name": "Sticky Note8"
+    },
+    {
+      "parameters": {
+        "operation": "uploadFile",
+        "additionalFieldsFile": {}
+      },
+      "type": "n8n-nodes-cloudinary.cloudinary",
+      "typeVersion": 1,
+      "position": [
+        560,
+        2784
+      ],
+      "id": "5245bf0c-1427-47d1-bae4-4f8e0f53cbf9",
+      "name": "Upload an asset from file data1"
+    },
+    {
+      "parameters": {
+        "operation": "create",
+        "base": {
+          "__rl": true,
+          "value": "YOUR_AIRTABLE_BASE_ID",
+          "mode": "id",
+          "cachedResultName": "Content Plan"
+        },
+        "table": {
+          "__rl": true,
+          "value": "YOUR_AIRTABLE_TABLE_ID",
+          "mode": "id",
+          "cachedResultName": "post_plan"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Post_name": "={{ $json.output.match(/<b>(.*?)<\\/b>/)?.[1] }}",
+            "post_text": "={{ $json.output }}",
+            "post_file": "={{ [ { url: $json.secure_url } ] }}",
+            "type_file": "photo",
+            "use_model": "=img: {{ $('system promt to img').item.json.model }}, text: {{ $('system promt to Txt').item.json.model }}",
+            "video_url": "={{ $json.url }}",
+            "Post_cost": 0.05,
+            "Chanel": "gotovimdoma_max",
+            "promt_to_model (image)": "={{ $('Promt for Img').item.json.output }}",
+            "promt_to_model (llm)": "={{ $('Post agent 3').item.json.output }}",
+            "system_promt_to_imeg": "={{ $('system promt to img').item.json['system promt to img'] }}",
+            "system_promt_to_LLM": "={{ $('system promt to Txt').item.json['system promt to txt'] }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "id_post",
+              "displayName": "id_post",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "Created",
+              "displayName": "Created",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "Post_name",
+              "displayName": "Post_name",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "post_text",
+              "displayName": "post_text",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "grade_koment",
+              "displayName": "grade_koment",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Chanel",
+              "displayName": "Chanel",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "gotovimdoma_max",
+                  "value": "gotovimdoma_max"
+                },
+                {
+                  "name": "gotovim_sssr",
+                  "value": "gotovim_sssr"
+                },
+                {
+                  "name": "receptynadom",
+                  "value": "receptynadom"
+                }
+              ],
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "post_file",
+              "displayName": "post_file",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "post_file 2",
+              "displayName": "post_file 2",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "post_file 3",
+              "displayName": "post_file 3",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "post_file 4",
+              "displayName": "post_file 4",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "post_file 5",
+              "displayName": "post_file 5",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "post_file 6",
+              "displayName": "post_file 6",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "watch_video",
+              "displayName": "watch_video",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "long_video(sek)",
+              "displayName": "long_video(sek)",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "type_file",
+              "displayName": "type_file",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "photo",
+                  "value": "photo"
+                },
+                {
+                  "name": "video",
+                  "value": "video"
+                },
+                {
+                  "name": "mix_photo",
+                  "value": "mix_photo"
+                }
+              ],
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "promt_to_model (image)",
+              "displayName": "promt_to_model (image)",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "promt_to_model (llm)",
+              "displayName": "promt_to_model (llm)",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "system_promt_to_imeg",
+              "displayName": "system_promt_to_imeg",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "system_promt_to_LLM",
+              "displayName": "system_promt_to_LLM",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "use_model",
+              "displayName": "use_model",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "permission",
+              "displayName": "permission",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "yes",
+                  "value": "yes"
+                },
+                {
+                  "name": "no",
+                  "value": "no"
+                }
+              ],
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "grade",
+              "displayName": "grade",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "5",
+                  "value": "5"
+                },
+                {
+                  "name": "4",
+                  "value": "4"
+                },
+                {
+                  "name": "3",
+                  "value": "3"
+                },
+                {
+                  "name": "2",
+                  "value": "2"
+                },
+                {
+                  "name": "1",
+                  "value": "1"
+                }
+              ],
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Post_cost",
+              "displayName": "Post_cost",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "date_of_posting",
+              "displayName": "date_of_posting",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "dateTime",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "tg",
+              "displayName": "tg",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "dateTime",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "max",
+              "displayName": "max",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "dateTime",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "er24",
+              "displayName": "er24",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "er",
+              "displayName": "er",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "err",
+              "displayName": "err",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "date_modified_by",
+              "displayName": "date_modified_by",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "dateTime",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "date_manual",
+              "displayName": "date_manual",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "options": [
+                {
+                  "name": "True",
+                  "value": "True"
+                },
+                {
+                  "name": "False",
+                  "value": "False"
+                }
+              ],
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "video_url",
+              "displayName": "video_url",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.1,
+      "position": [
+        976,
+        2400
+      ],
+      "id": "2f63df6a-b661-4902-9541-e73a4eb49070",
+      "name": "Create a record1"
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "0 40 11 * * *"
+            },
+            {
+              "field": "cronExpression",
+              "expression": "0 59 11 * * *"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        -1584,
+        2560
+      ],
+      "id": "9ae363db-dd32-4576-9a3f-bc48d57c1d4d",
+      "name": "Schedule Trigger1"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-5",
+          "mode": "list",
+          "cachedResultName": "gpt-5"
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        -448,
+        2736
+      ],
+      "id": "8377d8e5-30e6-4752-bfef-3d0f6eb0ebc7",
+      "name": "OpenAI Chat Model"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-5",
+          "mode": "list",
+          "cachedResultName": "gpt-5"
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        112,
+        2576
+      ],
+      "id": "f9418581-f74a-492a-9a32-f49a38c53c9e",
+      "name": "OpenAI Chat Model1"
+    },
+    {
+      "parameters": {
+        "jsCode": "const b64 = $json.data?.[0]?.b64_json;\n\nif (!b64) {\n  throw new Error('b64_json не найден в ответе OpenAI');\n}\n\nreturn [\n  {\n    json: $json,\n    binary: {\n      data: {\n        data: b64,\n        mimeType: 'image/png',\n        fileName: 'image.png',\n      },\n    },\n  },\n];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        288,
+        2784
+      ],
+      "id": "0083f220-120f-4cc6-b03a-780c2481633d",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.openai.com/v1/images/generations",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"model\": \"gpt-image-2\",\n  \"prompt\": {{ JSON.stringify($json.output) }},\n  \"size\": \"1024x1792\",\n  \"quality\": \"medium\",\n  \"n\": 1\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        -32,
+        2688
+      ],
+      "id": "9fc93e72-fa2d-4cb5-b64e-ef53d4166af5",
+      "name": "OpenAi",
+      "retryOnFail": true,
+      "waitBetweenTries": 2000,
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "5bfe88d6-8dcb-4447-a84a-df9bc70abcfc",
+              "name": "system promt to img",
+              "value": "Ты профессиональный арт-директор и специалист по food-фотографии для соцсетей.\n\nТвоя задача — на основе текста рецепта создать высококачественный промт для генерации фотореалистичного изображения блюда в модели nano-banana-pro-preview.\n\nСоздавай безопасный фотореалистичный промт для генерации изображения блюда в современной домашней эстетике.\n\nИзбегай упоминаний тем 18+, насилия, политики и любых запрещённых категорий.\nНе используй политическую символику, лозунги, портреты политиков, флаги, гербы и любые спорные визуальные элементы.\nСтиль должен передавать атмосферу современной домашней кухни через еду, посуду, стол, свет и аккуратную подачу.\n\nТребования к изображению:\n\nФормат:\n— Вертикальный 4:5 (1080x1350) приоритет.\n— Либо квадрат 1080x1080, если композиция лучше смотрится в квадрате.\n\nОсновной стиль:\n— Фотореалистичная food photography.\n— Современная домашняя кухня.\n— Атмосфера простой, вкусной еды, которую легко приготовить дома.\n— Блюдо должно выглядеть аппетитно, натурально, свежо и реалистично.\n— Не делать изображение ресторанным, глянцевым, люксовым или слишком постановочным.\n— Визуальный стиль должен быть ближе к современной editorial food photography: естественно, чисто, вкусно, аккуратно, но без ощущения рекламы.\n— Изображение должно выглядеть как настоящее фото домашней еды, снятое для современного Telegram-канала с рецептами.\n\nВизуальная атмосфера:\n— Тёплый естественный свет, как из окна на домашней кухне.\n— Мягкий направленный дневной свет сбоку или под углом.\n— Мягкие натуральные тени.\n— Чистое реалистичное изображение без сильных художественных фильтров.\n— Натуральные цвета еды, без кислотности и пересвета.\n— Тёплая цветовая гамма: бежевый, кремовый, тёплый коричневый, медовый, светло-серый, натуральный зелёный, мягкий янтарный.\n— Картинка должна выглядеть уютно, свежо, современно и очень реалистично.\n\nПосуда и окружение:\n— Простая современная домашняя посуда: керамическая, фарфоровая, стеклянная или матовая.\n— Лучше использовать светлую тарелку, блюдо, миску, форму для запекания или неглубокую тарелку, если это подходит блюду.\n— Деревянный кухонный стол, светлая столешница, простая скатерть или натуральный текстиль.\n— Льняная или хлопковая салфетка, кухонное полотенце, простой текстиль.\n— Стеклянная кружка, стакан с чаем, компотом, соком, молоком или другим нейтральным домашним напитком, если это уместно для блюда.\n— Простые приборы: вилка, ложка, нож, лопатка для подачи, если это подходит блюду.\n— Можно добавить крошки, след от подачи, аккуратно отрезанный кусок, небольшую порцию рядом или сервировочную деталь, если это усиливает реализм.\n— Фон должен напоминать обычную современную домашнюю кухню, а не кафе, ресторан или студию.\n— Окружение должно поддерживать атмосферу, но не отвлекать от самого блюда.\n\nКомпозиция:\n— Съёмка как на DSLR 50mm или 85mm.\n— Предпочтительный ракурс: лёгкий top-down, semi top-down или высокий угол сверху, как в натуральной домашней food-съёмке.\n— Для некоторых блюд допустим мягкий ракурс 45 градусов, если он лучше раскрывает объём и текстуру.\n— Основной акцент всегда на готовом блюде.\n— Блюдо занимает главную часть кадра.\n— Композиция должна выглядеть естественно и аккуратно, как живая food-фотография для соцсетей.\n— Допустимо показать основное блюдо целиком и отдельно одну порцию рядом, если это уместно для конкретного блюда.\n— Кадр должен быть достаточно плотным, чтобы хорошо читалась текстура еды, но с небольшим количеством воздуха вокруг.\n— Фон слегка размытый, если это подходит композиции.\n— Кадр должен выглядеть как настоящее фото еды, снятое на домашнем кухонном столе.\n\nВизуальные акценты еды:\n— Высокая детализация текстур блюда.\n— Видимый пар, если блюдо горячее.\n— Блеск масла, соуса, сиропа, подливки или сока, если применимо.\n— Натуральная сочность.\n— Хрустящая корочка, румяная запечённая поверхность или аппетитная структура, если блюдо жареное или запечённое.\n— Домашняя подача без чрезмерного украшательства.\n— Порция должна выглядеть сытной, настоящей и свежеприготовленной.\n— Если уместно, можно показать разрез, срез, зачерпнутую порцию, отделённый кусок или внутреннюю структуру блюда, чтобы усилить аппетитность.\n— Допустима лёгкая естественная неидеальность: крошки, след от ножа, капля соуса, неровный край порции, если это усиливает реализм.\n\nВажно:\n— Сохраняй узнаваемость блюда из рецепта.\n— Не заменяй основное блюдо на другое.\n— Не добавляй лишние ингредиенты, которых нет в рецепте, если они могут изменить смысл блюда.\n— Можно добавлять только нейтральные элементы сервировки: чай, компот, хлеб, ложку, вилку, салфетку, простую посуду, скатерть, деревянный стол, кухонный текстиль.\n— Не добавляй текст, надписи, логотипы, водяные знаки или этикетки на изображение.\n— Не добавляй людей, руки, лица, животных.\n— Не делай иллюстрацию, коллаж, инфографику или карточку рецепта.\n— Это должно быть именно фотореалистичное изображение готового блюда.\n— Изображение должно быть универсально применимо для разных домашних блюд: супов, выпечки, запеканок, салатов, вторых блюд, десертов.\n\nЗапрещено:\n— Иллюстрации.\n— Мультяшный стиль.\n— 3D-render.\n— Ресторанный стиль.\n— Минималистичный белый студийный фон.\n— Глянцевая рекламная съёмка.\n— Художественные фильтры.\n— Пересвеченные цвета.\n— Нереалистичная текстура еды.\n— Слишком идеальная ресторанная подача.\n— Политические символы.\n— Советская, ретро или ностальгическая стилизация.\n— Текст на изображении.\n\nЦель изображения:\nФото должно выглядеть как очень аппетитный и реалистичный кадр современного домашнего блюда на кухонном столе: простая аккуратная посуда, тёплый естественный свет, натуральная сервировка, возможна отдельная порция рядом, чай или другой уместный напиток, текстиль, натуральные крошки и ощущение настоящей домашней еды.\n\nФормат ответа:\n— Верни только готовый промт для генерации изображения.\n— Без пояснений.\n— Без JSON.\n— Без Markdown.\n— Без кавычек.\n— Один цельный текст.",
+              "type": "string"
+            },
+            {
+              "id": "007bee07-f912-4098-a8d1-46bdd92eca05",
+              "name": "model",
+              "value": "gpt2",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -672,
+        2544
+      ],
+      "id": "bc8e2b72-efec-4609-b285-ed266c34dd86",
+      "name": "system promt to img"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Вот рецепт:\n{{ $('Get many rows5').item.json.post_text }}\nСоздай промт для генерации картинки.\n",
+        "options": {
+          "systemMessage": "={{ $json['system promt to img'] }}"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3,
+      "position": [
+        -448,
+        2544
+      ],
+      "id": "988743d5-4863-463b-b38e-3686e26b3e55",
+      "name": "Promt for Img",
+      "retryOnFail": true,
+      "waitBetweenTries": 4000,
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "5bfe88d6-8dcb-4447-a84a-df9bc70abcfc",
+              "name": "system promt to txt",
+              "value": "=Ты делаешь пост для Telegram-канала с современными рецептами, которые можно приготовить в домашних условиях.\n\nТематика канала:\nКанал посвящён простым, понятным и вкусным домашним рецептам на каждый день: завтраки, обеды, ужины, выпечка, салаты, закуски, супы, десерты и быстрые блюда из доступных продуктов.\nПост должен передавать атмосферу современной домашней кухни: просто, аппетитно, без лишней сложности и ресторанной подачи.\nРецепт должен выглядеть так, будто его легко повторить дома без профессионального оборудования и сложных техник.\nНе используй политику, спорные темы, лишнюю драматизацию и выдуманные истории о блюде.\n\nГлавное правило:\nИтоговый текст, включая HTML-теги, пробелы и переносы строк, не должен превышать 1000 символов.\nНикогда не превышай 1000 символов.\n\nАлгоритм:\n1. Сначала внимательно прочитай исходный рецепт.\n2. Исправь грамматические, пунктуационные и стилистические ошибки.\n3. Если текст слишком длинный, перепиши его более лаконично.\n4. Если в рецепте есть нестыковки, исправь их: убери противоречия, согласуй ингредиенты и способ приготовления, исправь очевидные ошибки в действиях, порядке шагов, количестве или единицах измерения.\n5. Не меняй основное блюдо и не добавляй сложные ингредиенты, которых нет в рецепте.\n6. Сначала полностью сформируй пост.\n7. Посчитай количество символов.\n8. Если больше 1000 — сократи вступление и описание приготовления.\n9. Если всё ещё больше 1000 — сократи способ приготовления до самых важных действий.\n10. Финальный текст должен быть ≤ 1000 символов.\n\nСтиль поста:\n— Современный, простой, домашний.\n— Дружелюбный тон, обращение на «ты».\n— Простые слова, без сложных кулинарных терминов.\n— Пост должен звучать понятно, аккуратно и аппетитно.\n— Не делай текст слишком ресторанным, глянцевым или рекламным.\n— Не используй чрезмерно восторженные фразы вроде «невероятный шедевр» или «идеальный вкус, который покорит всех».\n— Лучше писать проще: «быстрый ужин», «простая выпечка к чаю», «сытный обед», «готовится без лишней возни», «из обычных продуктов», «подойдёт для всей семьи».\n\nОбязательная структура поста:\n\nПервый абзац:\n<b>Название блюда</b>\n\nЗатем короткое вступление:\n— «простой вариант для домашнего ужина»\n— «быстрое блюдо из доступных продуктов»\n— «отличный рецепт к чаю»\n— «сытный обед без лишней возни»\n— «домашний рецепт на каждый день»\n— «вкусное блюдо, которое легко повторить»\nНо не повторяй одну и ту же формулировку в каждом посте.\n\nЗатем:\nИнгредиенты:\nКаждый ингредиент с новой строки.\nПеред каждым ингредиентом обязательно ставь символ «—».\nНе используй <ul>, <ol>, <li>.\n\nЗатем:\nКак готовить:\nКраткий способ приготовления.\nКаждый этап приготовления должен быть пронумерован обычным текстовым списком: 1. 2. 3. и так далее.\nКаждый этап начинай с новой строки.\nПиши чёткую инструкцию без вариантов.\nНе пиши «можно», «по желанию», если это не важно.\nНе растягивай текст.\nЕсли в исходном рецепте шаги написаны хаотично, перепиши их в правильном логическом порядке.\n\nВ конце:\nКороткий CTA или финальная фраза.\nПримеры:\n— Сохрани рецепт, чтобы приготовить на ужин.\n— Подавай горячим — так вкуснее.\n— Отличный вариант для домашнего обеда.\n— Просто, сытно и без лишней возни.\n— Сохрани, если любишь домашние рецепты.\n— Хороший вариант к чаю.\n\nПравило разделов:\n— Каждый раздел отделяй одной пустой строкой.\n— Пустая строка должна быть между названием, вступлением, ингредиентами, способом приготовления и финальной фразой.\n— Не делай пост сплошным текстом.\n\nHTML-правила:\n— Название блюда обязательно через <b>.\n— Блоки «Ингредиенты» и «Как готовить» с новой строки.\n— Используй реальные переносы строк.\n— Между каждым смысловым разделом обязательно оставляй одну пустую строку.\n— Выводи чистый HTML.\n— Не добавляй символы перед HTML-тегами.\n— Не используй Markdown.\n— Не используй JSON.\n— Не экранируй HTML-теги.\n— Не используй <ul>, <ol>, <li>.\n— Не используй кавычки вокруг всего поста.\n— Не добавляй пояснения вне поста.\n\nЭмодзи:\n— Используй 1–4 эмодзи.\n— Эмодзи должны быть уместными для еды и домашней кухни.\n— Не используй слишком много ярких или случайных эмодзи.\n— Подходящие эмодзи: 🍲 🥔 🥣 🍞 🍰 🥗 🍳 🧀 🍅 🫖\n\nЗапрещено:\n— Превышать 1000 символов.\n— Добавлять JSON.\n— Добавлять Markdown.\n— Использовать списки HTML.\n— Писать политический или идеологический контекст.\n— Упоминать ГОСТ, историю блюда или происхождение рецепта, если этого нет в исходных данных.\n— Придумывать факты о блюде, если они не указаны в исходном рецепте.\n— Делать слишком длинное вступление.\n— Добавлять сложные ингредиенты, которых нет в рецепте.\n— Менять основное блюдо на другое.\n— Оставлять явные ошибки, повторы, нестыковки и грамматические ошибки из исходного рецепта.\n— Использовать слишком сложный, ресторанный или пафосный стиль.\n— Писать ингредиенты без символа «—».\n— Писать этапы приготовления без нумерации.\n— Склеивать разделы без пустых строк.\n\nЕсли рецепт обычный домашний — подавай его как «домашний рецепт на каждый день».\nЕсли блюдо быстрое — подавай его как «быстрый ужин» или «без лишней возни».\nЕсли это выпечка или сладкое — подавай как «к чаю» или «простая домашняя выпечка».\nЕсли это салат или закуска — подавай как «для домашнего стола» или «быстрая закуска».\nЕсли это суп или горячее — подавай как «сытный обед» или «простое горячее блюдо».\nЕсли в рецепте есть ошибки — исправь их незаметно и верни уже чистый, логичный и готовый пост.\n\nФормат ответа:\nВерни только готовый Telegram-пост в чистом HTML.\nБез JSON.\nБез пояснений.\nБез Markdown.\nБез кавычек.",
+              "type": "string"
+            },
+            {
+              "id": "007bee07-f912-4098-a8d1-46bdd92eca05",
+              "name": "model",
+              "value": "gpt-5",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -32,
+        2368
+      ],
+      "id": "74ff4fe5-06f1-4844-b84c-2d59aa6b3cfb",
+      "name": "system promt to Txt"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{$json.post_text}}",
+        "options": {
+          "systemMessage": "={{ $json['system promt img'] }}"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3,
+      "position": [
+        -976,
+        3632
+      ],
+      "id": "c2a81e73-1c18-4091-ba7a-ef5425b4d5fb",
+      "name": "AI Agent2",
+      "retryOnFail": true,
+      "waitBetweenTries": 4000,
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "tableId": "gotovimdoma_max_post500",
+        "limit": 1,
+        "matchType": "allFilters",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "status",
+              "condition": "eq",
+              "keyValue": "new"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        -1520,
+        3632
+      ],
+      "id": "753f50d7-9abc-4843-a8b3-35dfd50862fe",
+      "name": "Get many rows3"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "f1b6ed70-042d-49dd-806e-129051017842",
+              "name": "name",
+              "value": "={{ $json.name }}",
+              "type": "string"
+            },
+            {
+              "id": "2c75dee0-8faf-4539-8c3e-5642d10dcd67",
+              "name": "ingredients",
+              "value": "={{ $json.ingredients }}",
+              "type": "string"
+            },
+            {
+              "id": "6b02de3c-20c5-4a3d-b077-ecbf0b20b408",
+              "name": "steps_text",
+              "value": "={{ $json.steps_text }}",
+              "type": "string"
+            },
+            {
+              "id": "88b96972-0c71-470d-ae2e-a3127232d3d6",
+              "name": "prompt_ingredients",
+              "value": "={{ $json.prompt_ingredients }}",
+              "type": "string"
+            },
+            {
+              "id": "d1c7879c-9e65-4e9f-8fdc-2084ca43eaec",
+              "name": "prompt_step1",
+              "value": "={{ $json.prompt_step1 }}",
+              "type": "string"
+            },
+            {
+              "id": "8424af2f-8e57-4394-8d72-7d98eb52941e",
+              "name": "prompt_step2",
+              "value": "={{ $json.prompt_step2 }}",
+              "type": "string"
+            },
+            {
+              "id": "1bc729c2-f399-4604-b511-4be75021dd6a",
+              "name": "prompt_step3",
+              "value": "={{ $json.prompt_step3 }}",
+              "type": "string"
+            },
+            {
+              "id": "60000fd8-f40a-4883-8451-2744cafa5ec4",
+              "name": "prompt_step4",
+              "value": "={{ $json.prompt_step4 }}",
+              "type": "string"
+            },
+            {
+              "id": "c65a42d5-9f1e-48c3-af09-9256ebd810a9",
+              "name": "prompt_final",
+              "value": "={{ $json.prompt_final }}",
+              "type": "string"
+            },
+            {
+              "id": "c5436e94-629d-4a98-b7fc-bbcd96edc21e",
+              "name": "air table_id",
+              "value": "={{ $json.id }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -304,
+        3632
+      ],
+      "id": "ca797e9e-8717-4f1c-a582-f26b32e26e8b",
+      "name": "Edit Fields2"
+    },
+    {
+      "parameters": {        "jsCode": "const b64 = $json.data?.[0]?.b64_json;\n\nif (!b64) {\n  throw new Error('b64_json не найден в ответе OpenAI');\n}\n\nreturn [\n  {\n    json: $json,\n    binary: {\n      data: {\n        data: b64,\n        mimeType: 'image/png',\n        fileName: 'image.png',\n      },\n    },\n  },\n];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        800,
+        3392
+      ],
+      "id": "bd79a5e7-406f-45a9-8146-374a92683a4b",
+      "name": "Code in JavaScript23"
+    },
+    {
+      "parameters": {
+        "operation": "uploadFile",
+        "additionalFieldsFile": {}
+      },
+      "type": "n8n-nodes-cloudinary.cloudinary",
+      "typeVersion": 1,
+      "position": [
+        1104,
+        3392
+      ],
+      "id": "ab485f79-a9eb-403c-8413-db7e0ee2ba48",
+      "name": "Upload an asset from file data13"
+    },
+    {
+      "parameters": {
+        "jsCode": "const b64 = $json.data?.[0]?.b64_json;\n\nif (!b64) {\n  throw new Error('b64_json не найден в ответе OpenAI');\n}\n\nreturn [\n  {\n    json: $json,\n    binary: {\n      data: {\n        data: b64,\n        mimeType: 'image/png',\n        fileName: 'image.png',\n      },\n    },\n  },\n];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        800,
+        4544
+      ],
+      "id": "cec09e65-644a-4ef6-b910-46f176fefdfb",
+      "name": "Code in JavaScript24"
+    },
+    {
+      "parameters": {
+        "jsCode": "const b64 = $json.data?.[0]?.b64_json;\n\nif (!b64) {\n  throw new Error('b64_json не найден в ответе OpenAI');\n}\n\nreturn [\n  {\n    json: $json,\n    binary: {\n      data: {\n        data: b64,\n        mimeType: 'image/png',\n        fileName: 'image.png',\n      },\n    },\n  },\n];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        784,
+        3600
+      ],
+      "id": "a93b4d0c-e0bd-4564-a8c2-943f0c6ad02d",
+      "name": "Code in JavaScript25"
+    },
+    {
+      "parameters": {
+        "operation": "uploadFile",
+        "additionalFieldsFile": {}
+      },
+      "type": "n8n-nodes-cloudinary.cloudinary",
+      "typeVersion": 1,
+      "position": [
+        1088,
+        3600
+      ],
+      "id": "4648aa10-a19b-409a-899a-877727ff4bcb",
+      "name": "Upload an asset from file data14"
+    },
+    {
+      "parameters": {
+        "jsCode": "const b64 = $json.data?.[0]?.b64_json;\n\nif (!b64) {\n  throw new Error('b64_json не найден в ответе OpenAI');\n}\n\nreturn [\n  {\n    json: $json,\n    binary: {\n      data: {\n        data: b64,\n        mimeType: 'image/png',\n        fileName: 'image.png',\n      },\n    },\n  },\n];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        800,
+        3824
+      ],
+      "id": "74539d8d-c15d-4f03-871d-c23aaa7dafb8",
+      "name": "Code in JavaScript26"
+    },
+    {
+      "parameters": {
+        "operation": "uploadFile",
+        "additionalFieldsFile": {}
+      },
+      "type": "n8n-nodes-cloudinary.cloudinary",
+      "typeVersion": 1,
+      "position": [
+        1104,
+        3824
+      ],
+      "id": "598b21d3-66f0-4a42-b39c-73be6faad7d3",
+      "name": "Upload an asset from file data15"
+    },
+    {
+      "parameters": {
+        "jsCode": "const b64 = $json.data?.[0]?.b64_json;\n\nif (!b64) {\n  throw new Error('b64_json не найден в ответе OpenAI');\n}\n\nreturn [\n  {\n    json: $json,\n    binary: {\n      data: {\n        data: b64,\n        mimeType: 'image/png',\n        fileName: 'image.png',\n      },\n    },\n  },\n];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        816,
+        4032
+      ],
+      "id": "57415e35-0910-40b2-8059-9d4f8d680636",
+      "name": "Code in JavaScript27"
+    },
+    {
+      "parameters": {
+        "operation": "uploadFile",
+        "additionalFieldsFile": {}
+      },
+      "type": "n8n-nodes-cloudinary.cloudinary",
+      "typeVersion": 1,
+      "position": [
+        1120,
+        4032
+      ],
+      "id": "4108ac47-06d2-4d81-9da2-1796ee37c475",
+      "name": "Upload an asset from file data16"
+    },
+    {
+      "parameters": {
+        "jsCode": "const raw = $input.first().json.output;\n\n// 1) если агент вернул строку — чистим её\nlet cleaned = typeof raw === 'string' ? raw.trim() : raw;\n\n// 2) если это строка, убираем markdown-обёртку ```json ... ```\nif (typeof cleaned === 'string') {\n  cleaned = cleaned\n    .replace(/^```json\\s*/i, '')\n    .replace(/^```\\s*/i, '')\n    .replace(/```$/i, '')\n    .trim();\n}\n\n// 3) если в строке есть лишний текст до/после JSON — вытаскиваем только объект\nif (typeof cleaned === 'string') {\n  const start = cleaned.indexOf('{');\n  const end = cleaned.lastIndexOf('}');\n  if (start !== -1 && end !== -1) {\n    cleaned = cleaned.slice(start, end + 1);\n  }\n}\n\n// 4) парсим JSON\nconst data = typeof cleaned === 'string' ? JSON.parse(cleaned) : cleaned;\n\n// 5) возвращаем разложенные поля\nreturn [\n  {\n    json: {\n      name: data.name || '',\n      ingredients: data.ingredients || '',\n      steps_text: data.steps_text || '',\n\n      prompt_ingredients: data.prompt_ingredients || '',\n      prompt_step1: data.prompt_step1 || '',\n      prompt_step2: data.prompt_step2 || '',\n      prompt_step3: data.prompt_step3 || '',\n      prompt_step4: data.prompt_step4 || '',\n      prompt_final: data.prompt_final || ''\n    }\n  }\n];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -560,
+        3632
+      ],
+      "id": "74d3043d-8b08-495b-b75d-bd6c07a2c361",
+      "name": "Code in JavaScript2"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "tableId": "gotovimdoma_max_post500",
+        "matchType": "allFilters",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "id",
+              "condition": "eq",
+              "keyValue": "={{ $('Edit Fields7').item.json.id }}"
+            }
+          ]
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "status",
+              "fieldValue": "done"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        1488,
+        3408
+      ],
+      "id": "a3e528e3-b045-4ece-b877-04d0e9edb978",
+      "name": "Update a row2"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "e079be65-ff90-457f-8354-3f645ebb98bc",
+              "name": "id",
+              "value": "={{ $json.id }}",
+              "type": "number"
+            },
+            {
+              "id": "98232243-4cbd-479c-af70-96b84f299460",
+              "name": "post_text",
+              "value": "={{ $json.post_text }}",
+              "type": "string"
+            },
+            {
+              "id": "35061648-0295-4afd-b449-5552ab30c1e6",
+              "name": "system promt img",
+              "value": "Ты — экспертный AI-агент, преобразующий текст рецепта в структурированный JSON для генерации профессионального визуального контента. Ты создаёшь технические задания для нейросетей, которые должны быть безупречными, визуально логичными и выдержанными в современной домашней food-эстетике.\n\nТвоя задача — на основе текста рецепта создать:\n1. Готовый Telegram-пост для канала с современными домашними рецептами.\n2. Серию из 6 качественных промптов для генерации фотореалистичных изображений блюда в модели nano-banana-pro-preview.\n\nИзбегай упоминаний тем 18+, насилия, политики и любых запрещённых категорий.\nНе используй политическую символику, лозунги, портреты политиков, флаги, гербы и любые спорные визуальные элементы.\nСтиль должен передавать атмосферу современной домашней кухни через еду, посуду, стол, свет, продукты и аккуратную подачу.\n\n1. ГЛАВНЫЙ ПРИНЦИП: \"ВИЗУАЛЬНАЯ ПОЛНОТА И ТОЧНОСТЬ\"\n\nСоздавай серию из 6 изображений 9:16, по которым можно понять процесс приготовления блюда, не читая основной текст. Все ключевые параметры: ингредиенты, пропорции, время, температура и основные действия должны быть на картинках.\n\nКаждое изображение должно выглядеть как максимально реалистичный кадр современной домашней food-фотографии: простая вкусная еда, аккуратная домашняя посуда, тёплый естественный свет, деревянный кухонный стол или светлая столешница, натуральный текстиль, чистая композиция, аппетитная подача без ресторанного глянца.\n\n2. ПРОВЕРКА И КОРРЕКЦИЯ РЕЦЕПТА ПЕРЕД СОЗДАНИЕМ JSON\n\nПеред созданием JSON обязательно проверь исходный рецепт на логические ошибки, недочёты и несостыковки.\n\nПроверь:\n\n— все ли ингредиенты из списка используются в шагах;\n— нет ли в шагах ингредиентов, которых нет в списке;\n— хватает ли жидкости, масла, соли, сахара, специй или основы для приготовления;\n— не нарушен ли порядок приготовления;\n— есть ли понятное начало, середина и финал процесса;\n— указаны ли реалистичные время и температура;\n— не противоречат ли способ приготовления и итоговый вид блюда;\n— не выглядит ли рецепт так, будто блюдо невозможно приготовить по описанию;\n— нет ли слишком ресторанных, сложных или неуместных элементов подачи для домашнего канала.\n\nЕсли видишь ошибку, недочёт или несостыковку — сначала внутренне исправь рецепт до корректного домашнего варианта, а затем уже создавай пост и промпты для картинок.\n\nКорректируй рецепт минимально:\n— не меняй основное блюдо;\n— не заменяй ключевые ингредиенты без необходимости;\n— не добавляй дорогие, редкие или сложные ингредиенты;\n— если нужно добавить недостающий базовый ингредиент, используй только простые домашние продукты: соль, вода, масло, лук, мука, яйцо, молоко, сметана, зелень, лавровый лист, перец;\n— если не указано время или температура, задай реалистичные значения по кулинарной логике;\n— если рецепт слишком общий, сделай его конкретным, но не меняй смысл блюда.\n\nВ JSON возвращай уже исправленную, логичную версию рецепта.\nНе объясняй, что именно было исправлено.\nНе добавляй отдельное поле с анализом ошибок.\n\n3. TELEGRAM-ПОСТ\n\nСоздай короткий Telegram-пост для канала с современными домашними рецептами.\n\nГлавное правило:\nИтоговый текст post_text, включая HTML-теги, пробелы и переносы строк, не должен превышать 1000 символов.\nНикогда не превышай 1000 символов.\n\nСтиль поста:\n— современный, простой, домашний;\n— дружелюбный тон, обращение на «ты»;\n— простые слова, без сложных кулинарных терминов;\n— текст должен быть лаконичным, грамотным и аппетитным;\n— не делай текст ресторанным, глянцевым или рекламным;\n— не используй чрезмерно восторженные фразы;\n— если исходный текст длинный, перепиши его короче и понятнее.\n\nОбязательная структура post_text:\n\nПервый абзац:\n<b>Название блюда</b>\n\nЗатем короткое вступление:\n— простой вариант для домашнего ужина;\n— быстрое блюдо из доступных продуктов;\n— отличный рецепт к чаю;\n— сытный обед без лишней возни;\n— домашний рецепт на каждый день;\n— вкусное блюдо, которое легко повторить.\n\nНе повторяй одну и ту же формулировку в каждом посте.\n\nЗатем:\nИнгредиенты:\nКаждый ингредиент с новой строки.\nПеред каждым ингредиентом обязательно ставь символ «—».\nНе используй <ul>, <ol>, <li>.\n\nЗатем:\nКак готовить:\nКраткий способ приготовления.\nКаждый этап приготовления должен быть пронумерован обычным текстовым списком: 1. 2. 3. и так далее.\nКаждый этап начинай с новой строки.\nПиши чёткую инструкцию без вариантов.\nНе пиши «можно», «по желанию», если это не важно.\nЕсли шаги написаны хаотично, перепиши их в правильном логическом порядке.\n\nВ конце:\nКороткий CTA или финальная фраза.\nПримеры:\n— Сохрани рецепт, чтобы приготовить на ужин.\n— Подавай горячим — так вкуснее.\n— Отличный вариант для домашнего обеда.\n— Просто, сытно и без лишней возни.\n— Сохрани, если любишь домашние рецепты.\n— Хороший вариант к чаю.\n\nПравило разделов:\n— Каждый раздел отделяй одной пустой строкой.\n— Пустая строка должна быть между названием, вступлением, ингредиентами, способом приготовления и финальной фразой.\n— Не делай пост сплошным текстом.\n\nHTML-правила для post_text:\n— Название блюда обязательно через <b>.\n— Блоки «Ингредиенты» и «Как готовить» с новой строки.\n— Используй реальные переносы строк внутри строки JSON через \\n.\n— Между каждым смысловым разделом обязательно оставляй одну пустую строку через \\n\\n.\n— Выводи чистый HTML.\n— Не используй Markdown.\n— Не используй JSON внутри post_text.\n— Не экранируй HTML-теги как &lt;b&gt;.\n— Не используй <ul>, <ol>, <li>.\n— Не используй кавычки вокруг всего поста.\n\nЭмодзи:\n— Используй 1–4 эмодзи.\n— Эмодзи должны быть уместными для еды и домашней кухни.\n— Подходящие эмодзи: 🍲 🥔 🥣 🍞 🍰 🥗 🍳 🧀 🍅 🫖\n\n4. ВИЗУАЛЬНАЯ КОНСИСТЕНТНОСТЬ\n\nЧтобы продукты не меняли форму от кадра к кадру, ты обязан:\n\nИдентифицировать конкретику:\nЕсли в рецепте «паста» — определи её вид: спагетти, пенне, фузилли.\nЕсли «каша» — определи крупу: гречневая, рисовая, пшённая, манная, овсяная.\nЕсли «мясо» — определи форму нарезки: кусочки, ломтики, фарш, котлеты, филе.\nЕсли «картофель» — определи вид: кубики, кружочки, пюре, дольки, целый отварной картофель.\nЕсли «овощи» — определи нарезку: кубики, соломка, кружочки, дольки.\n\nСквозное описание:\nПрописывай форму и вид основного продукта в каждом из 6 промптов:\nprompt_ingredients, prompt_step1, prompt_step2, prompt_step3, prompt_step4, prompt_final.\n\nПример:\nЕсли выбраны spaghetti, в каждом промпте должно быть указано \"thin long spaghetti noodles\", чтобы нейросеть не нарисовала макароны-рожки на третьем шаге.\n\nСохраняй простую домашнюю подачу:\nбез ресторанной выкладки, без микрозелени, без премиальных тарелок, без студийной стерильности, без рекламной глянцевости.\n\n5. ТЕХНИЧЕСКИЕ ПАРАМЕТРЫ СТИЛЯ ДЛЯ КАЖДОГО ИЗОБРАЖЕНИЯ\n\nКаждый prompt_step, prompt_ingredients и prompt_final должен начинаться с этих параметров:\n\nФормат:\nvertical 9:16 aspect ratio.\n\nВизуал:\nultra realistic food photography, no hands in frame, invisible cook, soft natural window lighting, modern home kitchen atmosphere, clean editorial food photography, high detail textures, natural colors, 4k quality.\n\nФон:\nЕдиная современная домашняя кухня, одинаковая посуда, одинаковый стол, одинаковый свет, одинаковая тёплая цветовая гамма.\n\nОбязательная атмосфера:\n— тёплый естественный свет, как из окна на домашней кухне;\n— мягкий направленный дневной свет сбоку или под углом;\n— мягкие натуральные тени;\n— чистое реалистичное изображение без сильных художественных фильтров;\n— натуральные цвета еды, без кислотности и пересвета;\n— тёплая гамма: бежевый, кремовый, тёплый коричневый, медовый, светло-серый, натуральный зелёный, мягкий янтарный;\n— обычная современная домашняя кухня, а не кафе, ресторан или студия.\n\nПосуда и окружение:\n— простая современная домашняя посуда: керамическая, фарфоровая, стеклянная или матовая;\n— светлая тарелка, блюдо, миска, форма для запекания или неглубокая тарелка, если это подходит блюду;\n— деревянный кухонный стол, светлая столешница, простая скатерть или натуральный текстиль;\n— льняная или хлопковая салфетка, кухонное полотенце, простой текстиль;\n— стеклянная кружка или стакан с чаем, компотом, соком, молоком или другим нейтральным домашним напитком, если это уместно;\n— простые приборы: вилка, ложка, нож, лопатка для подачи, если это подходит блюду;\n— крошки, след от подачи, аккуратно отрезанный кусок, небольшая порция рядом или сервировочная деталь, если это усиливает реализм.\n\nЗапрещено в визуальном стиле:\n— ресторанный стиль;\n— глянцевая рекламная съёмка;\n— белый студийный фон;\n— минималистичная премиальная подача;\n— кислотные цвета;\n— слишком идеальная сервировка;\n— политические символы;\n— советская, ретро или ностальгическая стилизация;\n— логотипы, бренды, этикетки и водяные знаки.\n\n6. ЕДИНЫЙ СТИЛЬ ТЕКСТА НА ИЗОБРАЖЕНИЯХ\n\nРЕГИСТР:\nВесь текст в exact Russian text overlay должен быть написан строго заглавными буквами.\n\nПОЛОЖЕНИЕ:\nСтрого в самой верхней части кадра: text positioned at the very top of the image.\n\nШРИФТ:\nwhite bold sans-serif font, clean typography, soft drop shadow, readable food recipe overlay, modern home cooking visual style.\n\nТекст должен быть хорошо читаемым, но не должен превращать изображение в инфографику или рекламный баннер.\n\nНе добавляй лишний текст, логотипы, наклейки, этикетки, подписи на посуде или фоне.\nРазрешён только exact Russian text overlay, который указан в промпте.\n\n7. КУЛИНАРНАЯ ТОЧНОСТЬ И НЕПРЕРЫВНОСТЬ\n\nБез нумерации на изображениях:\nЗапрещено писать \"1/4\", \"ШАГ 1\", \"ЭТАП 1\".\nНачинай сразу с действия.\n\nДетализация:\nОбязательно указывай время в минутах и температуру в °C прямо в тексте на картинках, если это применимо к действию.\n\nПропорции:\nВ prompt_ingredients указывай точные веса и количество: Г, МЛ, ШТ, Ч. Л., СТ. Л.\nМежду цифрами и обозначением всегда делай пробел.\n\n100% покрытие:\nСумма текстов на 4-х шагах должна описывать весь процесс от начала до конца.\n\nКаждый шаг должен быть визуально понятным:\n— prompt_ingredients показывает все основные продукты;\n— prompt_step1 показывает подготовку или первый важный процесс;\n— prompt_step2 показывает следующий технологический этап;\n— prompt_step3 показывает основной процесс приготовления;\n— prompt_step4 показывает доведение до готовности, сборку или финальную обработку;\n— prompt_final показывает готовое блюдо в современной домашней подаче.\n\nЕсли блюдо горячее — добавляй видимый пар.\nЕсли блюдо жареное или запечённое — добавляй хрустящую корочку, блеск масла, румяные участки.\nЕсли есть соус, подливка, крем, сироп или сметана — показывай натуральный блеск и густоту.\nЕсли блюдо варёное или тушёное — показывай мягкую домашнюю текстуру без ресторанной глянцевости.\nЕсли уместно — показывай разрез, срез, зачерпнутую порцию, отделённый кусок или внутреннюю структуру блюда, чтобы усилить аппетитность.\n\n8. ФОРМАТ ОТВЕТА\n\nТы должен выдать строго валидный JSON без лишних комментариев.\n\nВсе значения должны быть строками.\nВсе переносы строк внутри строк JSON записывай через \\n.\nНе добавляй текст до JSON.\nНе добавляй текст после JSON.\nНе используй Markdown.\nНе используй кавычки вокруг всего ответа.\nJSON должен быть валидным.\n\nФормат JSON:\n\n{\n  \"name\": \"НАЗВАНИЕ БЛЮДА\",\n  \"post_text\": \"<b>НАЗВАНИЕ БЛЮДА</b>\\n\\nКОРОТКОЕ ВСТУПЛЕНИЕ\\n\\nИнгредиенты:\\n— ИНГРЕДИЕНТ\\n— ИНГРЕДИЕНТ\\n— ИНГРЕДИЕНТ\\n\\nКак готовить:\\n1. ДЕЙСТВИЕ.\\n2. ДЕЙСТВИЕ.\\n3. ДЕЙСТВИЕ.\\n\\nФИНАЛЬНАЯ ФРАЗА\",\n  \"ingredients\": \"исправленный и логичный список ингредиентов одной строкой через запятую\",\n  \"steps_text\": \"исправленное, полное, подробное описание приготовления от начала до конца, технический бэкап без визуальных промптов\",\n  \"prompt_ingredients\": \"(vertical 9:16 aspect ratio, ultra realistic food photography, no hands in frame, invisible cook, soft natural window lighting, modern home kitchen atmosphere, clean editorial food photography, high detail textures, natural colors, 4k quality, same modern home kitchen background, same simple home tableware, text at the very top, white bold sans-serif font, clean typography, soft drop shadow) + [подробное описание вида и формы продуктов, современная домашняя кухня, простая светлая посуда, деревянный стол или светлая столешница, натуральный текстиль, аккуратная реальная раскладка ингредиентов без студийной стерильности] + exact Russian text overlay, white bold sans-serif font, clean typography, soft drop shadow, readable food recipe overlay, modern home cooking visual style: 'ИНГРЕДИЕНТЫ:\\n[ПРОДУКТ] [КОЛ-ВО]\\n[ПРОДУКТ] [КОЛ-ВО]\\n[ПРОДУКТ] [КОЛ-ВО]' (text positioned at the very top of the image)\",\n  \"prompt_step1\": \"(vertical 9:16 aspect ratio, ultra realistic food photography, no hands in frame, invisible cook, soft natural window lighting, modern home kitchen atmosphere, clean editorial food photography, high detail textures, natural colors, 4k quality, same modern home kitchen background, same simple home tableware, text at the very top, white bold sans-serif font, clean typography, soft drop shadow) + [описание сцены с указанием формы и вида основного продукта, визуально понятное первое действие, та же домашняя кухня, тот же стол, та же посуда, аккуратный реальный процесс без рук в кадре] + exact Russian text overlay, white bold sans-serif font, clean typography, soft drop shadow, readable food recipe overlay, modern home cooking visual style: '[ТЕКСТ ШАГА 1 КАПСОМ С ВРЕМЕНЕМ/ТЕМПЕРАТУРОЙ]' (text positioned at the very top of the image)\",\n  \"prompt_step2\": \"(vertical 9:16 aspect ratio, ultra realistic food photography, no hands in frame, invisible cook, soft natural window lighting, modern home kitchen atmosphere, clean editorial food photography, high detail textures, natural colors, 4k quality, same modern home kitchen background, same simple home tableware, text at the very top, white bold sans-serif font, clean typography, soft drop shadow) + [описание сцены с указанием формы и вида основного продукта, продолжение того же блюда, логичный следующий этап, та же домашняя кухня, тот же стол, та же посуда, без ресторанной подачи] + exact Russian text overlay, white bold sans-serif font, clean typography, soft drop shadow, readable food recipe overlay, modern home cooking visual style: '[ТЕКСТ ШАГА 2 КАПСОМ С ВРЕМЕНЕМ/ТЕМПЕРАТУРОЙ]' (text positioned at the very top of the image)\",\n  \"prompt_step3\": \"(vertical 9:16 aspect ratio, ultra realistic food photography, no hands in frame, invisible cook, soft natural window lighting, modern home kitchen atmosphere, clean editorial food photography, high detail textures, natural colors, 4k quality, same modern home kitchen background, same simple home tableware, text at the very top, white bold sans-serif font, clean typography, soft drop shadow) + [описание сцены с указанием формы и вида основного продукта, основной процесс приготовления, пар, масло, соус, подливка, румяная корочка или кипение если применимо, современная домашняя атмосфера, реалистичная текстура еды] + exact Russian text overlay, white bold sans-serif font, clean typography, soft drop shadow, readable food recipe overlay, modern home cooking visual style: '[ТЕКСТ ШАГА 3 КАПСОМ С ВРЕМЕНЕМ/ТЕМПЕРАТУРОЙ]' (text positioned at the very top of the image)\",\n  \"prompt_step4\": \"(vertical 9:16 aspect ratio, ultra realistic food photography, no hands in frame, invisible cook, soft natural window lighting, modern home kitchen atmosphere, clean editorial food photography, high detail textures, natural colors, 4k quality, same modern home kitchen background, same simple home tableware, text at the very top, white bold sans-serif font, clean typography, soft drop shadow) + [описание сцены с указанием формы и вида основного продукта, доведение до готовности, финальная обработка или сборка блюда, та же домашняя кухня, та же посуда, аппетитный домашний вид без ресторанной подачи] + exact Russian text overlay, white bold sans-serif font, clean typography, soft drop shadow, readable food recipe overlay, modern home cooking visual style: '[ТЕКСТ ШАГА 4 КАПСОМ С ВРЕМЕНЕМ/ТЕМПЕРАТУРОЙ]' (text positioned at the very top of the image)\",\n  \"prompt_final\": \"(vertical 9:16 aspect ratio, ultra realistic food photography, no hands in frame, invisible cook, soft natural window lighting, modern home kitchen atmosphere, clean editorial food photography, high detail textures, natural colors, 4k quality, same modern home kitchen background, same simple home tableware, appetizing homemade plating, text at the very top, white bold sans-serif font, clean typography, soft drop shadow) + [готовое блюдо с финальным видом основного продукта, простая светлая тарелка или миска, деревянный кухонный стол или светлая столешница, натуральный текстиль, чай или другой уместный домашний напиток если подходит, отдельная порция рядом если уместно, разрез или срез если это усиливает аппетитность, тёплый домашний свет, натуральные крошки или след подачи, настоящая домашняя еда без ресторанного глянца] + exact Russian text overlay, white bold sans-serif font, clean typography, soft drop shadow, readable food recipe overlay, modern home cooking visual style: 'ПРИЯТНОГО АППЕТИТА' (text positioned at the very top of the image)\"\n}\n\nТОЛЬКО CAPS LOCK для всех надписей на русском языке внутри exact Russian text overlay.\n\nНИКАКИХ ЦИФР ШАГОВ НА ИЗОБРАЖЕНИЯХ.\nНачинай текст на изображениях сразу с глагола или действия.\n\nТЕКСТ НА ИЗОБРАЖЕНИЯХ ВСЕГДА СВЕРХУ.\n\nКОНСИСТЕНТНОСТЬ:\nЕсли на шаге 1 паста — \"fusilli\", она должна быть \"fusilli\" на всех шагах.\nЕсли на первом кадре гречневая каша — она должна оставаться гречневой кашей на всех кадрах.\nЕсли картофель нарезан кубиками — он должен оставаться кубиками на всех этапах, где это визуально видно.\n\nСОВРЕМЕННЫЙ ДОМАШНИЙ СТИЛЬ:\nПередавай атмосферу современной домашней кухни через свет, стол, посуду, натуральный текстиль, аккуратную подачу и реалистичный вид еды.\nНе используй советскую, ретро, ностальгическую, ресторанную, премиальную или студийную стилизацию.\n\nФОТОРЕАЛИЗМ:\nНе делай иллюстрацию, 3D-render, мультяшный стиль, инфографику, ресторанную съёмку или премиальную рекламу еды.\n\nJSON должен быть валидным.\nНе добавляй текст до JSON.\nНе добавляй текст после JSON.\nНе используй Markdown.\nНе используй кавычки вокруг всего ответа.\n",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -1312,
+        3632
+      ],
+      "id": "49172760-9373-4e57-afb0-306f24c65d29",
+      "name": "Edit Fields7"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.openai.com/v1/images/generations",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n \"model\": \"gpt-image-2\",\n \"prompt\": {{ JSON.stringify($json.prompt_step1) }},\n \"size\": \"1024x1792\",\n \"quality\": \"medium\",\n \"n\": 1\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        528,
+        3616
+      ],
+      "id": "5fc03fd4-028a-47b5-81fe-c2431115a9a5",
+      "name": "NanaBanano13",
+      "retryOnFail": true,
+      "waitBetweenTries": 4000,
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.openai.com/v1/images/generations",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n \"model\": \"gpt-image-2\",\n \"prompt\": {{ JSON.stringify($json.prompt_ingredients) }},\n \"size\": \"1024x1792\",\n \"quality\": \"medium\",\n \"n\": 1\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        528,
+        3408
+      ],
+      "id": "36adc531-0dd0-4e44-8b8e-ff7d27251952",
+      "name": "NanaBanano14",
+      "retryOnFail": true,
+      "waitBetweenTries": 4000,
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.openai.com/v1/images/generations",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n \"model\": \"gpt-image-2\",\n \"prompt\": {{ JSON.stringify($json.prompt_step2) }},\n \"size\": \"1024x1792\",\n \"quality\": \"medium\",\n \"n\": 1\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        544,
+        3840
+      ],
+      "id": "b43751d7-3da6-49e8-b37e-ae885b9ef2f7",
+      "name": "NanaBanano15",
+      "retryOnFail": true,
+      "waitBetweenTries": 4000,
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.openai.com/v1/images/generations",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n \"model\": \"gpt-image-2\",\n \"prompt\": {{ JSON.stringify($json.prompt_step3) }},\n \"size\": \"1024x1792\",\n \"quality\": \"medium\",\n \"n\": 1\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        544,
+        4064
+      ],
+      "id": "3a73b817-c9b6-4667-9f51-69c4f6e1f562",
+      "name": "NanaBanano16",
+      "retryOnFail": true,
+      "waitBetweenTries": 4000,
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.openai.com/v1/images/generations",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"model\": \"gpt-image-2\",\n  \"prompt\": {{ JSON.stringify($json.prompt_final) }},\n  \"size\": \"1024x1792\",\n  \"quality\": \"medium\",\n  \"n\": 1\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        496,
+        4560
+      ],
+      "id": "cb2eabbf-5ac0-4582-96fa-22fb3c03142a",
+      "name": "NanaBanano17",
+      "retryOnFail": true,
+      "waitBetweenTries": 4000,
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "operation": "uploadFile",
+        "additionalFieldsFile": {}
+      },
+      "type": "n8n-nodes-cloudinary.cloudinary",
+      "typeVersion": 1,
+      "position": [
+        1104,
+        4544
+      ],
+      "id": "00a8ca13-fed4-4476-817d-78b44c975756",
+      "name": "Upload an asset from file data17"
+    },
+    {
+      "parameters": {
+        "jsCode": "const b64 = $json.data?.[0]?.b64_json;\n\nif (!b64) {\n  throw new Error('b64_json не найден в ответе OpenAI');\n}\n\nreturn [\n  {\n    json: $json,\n    binary: {\n      data: {\n        data: b64,\n        mimeType: 'image/png',\n        fileName: 'image.png',\n      },\n    },\n  },\n];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        784,
+        4256
+      ],
+      "id": "535de21a-f14f-42e0-9d17-f3a43404535e",
+      "name": "Code in JavaScript28"
+    },
+    {
+      "parameters": {
+        "operation": "uploadFile",
+        "additionalFieldsFile": {}
+      },
+      "type": "n8n-nodes-cloudinary.cloudinary",
+      "typeVersion": 1,
+      "position": [
+        1088,
+        4256
+      ],
+      "id": "b1ba34f5-a63a-4a35-b85b-d8e3501a621e",
+      "name": "Upload an asset from file data18"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.openai.com/v1/images/generations",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n \"model\": \"gpt-image-2\",\n \"prompt\": {{ JSON.stringify($json.prompt_step4) }},\n \"size\": \"1024x1792\",\n \"quality\": \"medium\",\n \"n\": 1\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        512,
+        4288
+      ],
+      "id": "db4529a7-d3e7-4037-8452-a0dd4071757c",
+      "name": "NanaBanano18",
+      "retryOnFail": true,
+      "waitBetweenTries": 4000,
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "base": {
+          "__rl": true,
+          "value": "YOUR_AIRTABLE_BASE_ID",
+          "mode": "id",
+          "cachedResultName": "Content Plan"
+        },
+        "table": {
+          "__rl": true,
+          "value": "YOUR_AIRTABLE_TABLE_ID",
+          "mode": "id",
+          "cachedResultName": "post_plan"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "post_file 2": "={{ [ { url: $('Upload an asset from file data14').item.json.secure_url } ] }}",
+            "id": "={{ $('Edit Fields4').item.json['air table_id'] }}"
+          },
+          "matchingColumns": [
+            "id"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": false
+            },
+            {
+              "id": "id_post",
+              "displayName": "id_post",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "Created",
+              "displayName": "Created",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "Post_name",
+              "displayName": "Post_name",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "post_text",
+              "displayName": "post_text",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "post_file",
+              "displayName": "post_file",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "post_file 2",
+              "displayName": "post_file 2",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "post_file 3",
+              "displayName": "post_file 3",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "post_file 4",
+              "displayName": "post_file 4",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "post_file 5",
+              "displayName": "post_file 5",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "post_file 6",
+              "displayName": "post_file 6",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "watch_video",
+              "displayName": "watch_video",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "long_video(sek)",
+              "displayName": "long_video(sek)",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "type_file",
+              "displayName": "type_file",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "photo",
+                  "value": "photo"
+                },
+                {
+                  "name": "video",
+                  "value": "video"
+                }
+              ],
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "promt_to_model",
+              "displayName": "promt_to_model",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "use_model",
+              "displayName": "use_model",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "permission",
+              "displayName": "permission",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "yes",
+                  "value": "yes"
+                },
+                {
+                  "name": "no",
+                  "value": "no"
+                }
+              ],
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "grade",
+              "displayName": "grade",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "5",
+                  "value": "5"
+                },
+                {
+                  "name": "4",
+                  "value": "4"
+                },
+                {
+                  "name": "3",
+                  "value": "3"
+                },
+                {
+                  "name": "2",
+                  "value": "2"
+                },
+                {
+                  "name": "1",
+                  "value": "1"
+                }
+              ],
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "grade_koment",
+              "displayName": "grade_koment",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Post_cost",
+              "displayName": "Post_cost",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "date_of_posting",
+              "displayName": "date_of_posting",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "dateTime",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "tg",
+              "displayName": "tg",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "dateTime",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "max",
+              "displayName": "max",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "dateTime",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "er24",
+              "displayName": "er24",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "er",
+              "displayName": "er",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "err",
+              "displayName": "err",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "date_modified_by",
+              "displayName": "date_modified_by",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "dateTime",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "date_manual",
+              "displayName": "date_manual",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "options": [
+                {
+                  "name": "True",
+                  "value": "True"
+                },
+                {
+                  "name": "False",
+                  "value": "False"
+                }
+              ],
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "system_update",
+              "displayName": "system_update",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "boolean",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "video_url",
+              "displayName": "video_url",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "audio_url",
+              "displayName": "audio_url",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.1,
+      "position": [
+        1296,
+        3600
+      ],
+      "id": "5a954b18-3e21-4c5b-ab3d-e0e0ebb21b01",
+      "name": "Update record12",
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "base": {
+          "__rl": true,
+          "value": "YOUR_AIRTABLE_BASE_ID",
+          "mode": "id",
+          "cachedResultName": "Content Plan"
+        },
+        "table": {
+          "__rl": true,
+          "value": "YOUR_AIRTABLE_TABLE_ID",
+          "mode": "id",
+          "cachedResultName": "post_plan"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "post_file 3": "={{ [ { url: $('Upload an asset from file data15').item.json.secure_url } ] }}",
+            "id": "={{ $('Edit Fields4').first().json['air table_id'] }}"
+          },
+          "matchingColumns": [
+            "id"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": false
+            },
+            {
+              "id": "id_post",
+              "displayName": "id_post",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "Created",
+              "displayName": "Created",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "Post_name",
+              "displayName": "Post_name",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "post_text",
+              "displayName": "post_text",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "post_file",
+              "displayName": "post_file",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "post_file 2",
+              "displayName": "post_file 2",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "post_file 3",
+              "displayName": "post_file 3",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "post_file 4",
+              "displayName": "post_file 4",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "post_file 5",
+              "displayName": "post_file 5",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "post_file 6",
+              "displayName": "post_file 6",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "watch_video",
+              "displayName": "watch_video",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "long_video(sek)",
+              "displayName": "long_video(sek)",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "type_file",
+              "displayName": "type_file",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "photo",
+                  "value": "photo"
+                },
+                {
+                  "name": "video",
+                  "value": "video"
+                }
+              ],
+              "readOnly": false,
+              "removed": true
+            },
+            {              "id": "promt_to_model",
+              "displayName": "promt_to_model",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "use_model",
+              "displayName": "use_model",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "permission",
+              "displayName": "permission",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "yes",
+                  "value": "yes"
+                },
+                {
+                  "name": "no",
+                  "value": "no"
+                }
+              ],
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "grade",
+              "displayName": "grade",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "5",
+                  "value": "5"
+                },
+                {
+                  "name": "4",
+                  "value": "4"
+                },
+                {
+                  "name": "3",
+                  "value": "3"
+                },
+                {
+                  "name": "2",
+                  "value": "2"
+                },
+                {
+                  "name": "1",
+                  "value": "1"
+                }
+              ],
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "grade_koment",
+              "displayName": "grade_koment",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Post_cost",
+              "displayName": "Post_cost",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "date_of_posting",
+              "displayName": "date_of_posting",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "dateTime",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "tg",
+              "displayName": "tg",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "dateTime",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "max",
+              "displayName": "max",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "dateTime",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "er24",
+              "displayName": "er24",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "er",
+              "displayName": "er",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "err",
+              "displayName": "err",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "date_modified_by",
+              "displayName": "date_modified_by",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "dateTime",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "date_manual",
+              "displayName": "date_manual",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "options": [
+                {
+                  "name": "True",
+                  "value": "True"
+                },
+                {
+                  "name": "False",
+                  "value": "False"
+                }
+              ],
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "system_update",
+              "displayName": "system_update",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "boolean",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "video_url",
+              "displayName": "video_url",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "audio_url",
+              "displayName": "audio_url",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.1,
+      "position": [
+        1312,
+        3824
+      ],
+      "id": "5c3de92e-affb-4927-b459-581aee3c390e",
+      "name": "Update record13",
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "base": {
+          "__rl": true,
+          "value": "YOUR_AIRTABLE_BASE_ID",
+          "mode": "id",
+          "cachedResultName": "Content Plan"
+        },
+        "table": {
+          "__rl": true,
+          "value": "YOUR_AIRTABLE_TABLE_ID",
+          "mode": "id",
+          "cachedResultName": "post_plan"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "post_file 4": "={{ [ { url: $('Upload an asset from file data16').item.json.secure_url } ] }}",
+            "id": "={{ $('Edit Fields4').first().json['air table_id'] }}"
+          },
+          "matchingColumns": [
+            "id"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": false
+            },
+            {
+              "id": "id_post",
+              "displayName": "id_post",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "Created",
+              "displayName": "Created",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "Post_name",
+              "displayName": "Post_name",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "post_text",
+              "displayName": "post_text",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "post_file",
+              "displayName": "post_file",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "post_file 2",
+              "displayName": "post_file 2",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "post_file 3",
+              "displayName": "post_file 3",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "post_file 4",
+              "displayName": "post_file 4",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "post_file 5",
+              "displayName": "post_file 5",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "post_file 6",
+              "displayName": "post_file 6",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "watch_video",
+              "displayName": "watch_video",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "long_video(sek)",
+              "displayName": "long_video(sek)",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "type_file",
+              "displayName": "type_file",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "photo",
+                  "value": "photo"
+                },
+                {
+                  "name": "video",
+                  "value": "video"
+                }
+              ],
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "promt_to_model",
+              "displayName": "promt_to_model",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "use_model",
+              "displayName": "use_model",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "permission",
+              "displayName": "permission",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "yes",
+                  "value": "yes"
+                },
+                {
+                  "name": "no",
+                  "value": "no"
+                }
+              ],
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "grade",
+              "displayName": "grade",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "5",
+                  "value": "5"
+                },
+                {
+                  "name": "4",
+                  "value": "4"
+                },
+                {
+                  "name": "3",
+                  "value": "3"
+                },
+                {
+                  "name": "2",
+                  "value": "2"
+                },
+                {
+                  "name": "1",
+                  "value": "1"
+                }
+              ],
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "grade_koment",
+              "displayName": "grade_koment",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Post_cost",
+              "displayName": "Post_cost",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "date_of_posting",
+              "displayName": "date_of_posting",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "dateTime",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "tg",
+              "displayName": "tg",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "dateTime",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "max",
+              "displayName": "max",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "dateTime",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "er24",
+              "displayName": "er24",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "er",
+              "displayName": "er",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "err",
+              "displayName": "err",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "date_modified_by",
+              "displayName": "date_modified_by",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "dateTime",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "date_manual",
+              "displayName": "date_manual",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "options": [
+                {
+                  "name": "True",
+                  "value": "True"
+                },
+                {
+                  "name": "False",
+                  "value": "False"
+                }
+              ],
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "system_update",
+              "displayName": "system_update",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "boolean",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "video_url",
+              "displayName": "video_url",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "audio_url",
+              "displayName": "audio_url",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.1,
+      "position": [
+        1344,
+        4032
+      ],
+      "id": "738e1c10-5ff3-470a-bcd6-66883cb2d807",
+      "name": "Update record14",
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "base": {
+          "__rl": true,
+          "value": "YOUR_AIRTABLE_BASE_ID",
+          "mode": "id",
+          "cachedResultName": "Content Plan"
+        },
+        "table": {
+          "__rl": true,
+          "value": "YOUR_AIRTABLE_TABLE_ID",
+          "mode": "id",
+          "cachedResultName": "post_plan"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "post_file 5": "={{ [ { url: $('Upload an asset from file data18').item.json.secure_url } ] }}",
+            "id": "={{ $('Edit Fields4').first().json['air table_id'] }}"
+          },
+          "matchingColumns": [
+            "id"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": false
+            },
+            {
+              "id": "id_post",
+              "displayName": "id_post",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "Created",
+              "displayName": "Created",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "Post_name",
+              "displayName": "Post_name",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "post_text",
+              "displayName": "post_text",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "post_file",
+              "displayName": "post_file",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "post_file 2",
+              "displayName": "post_file 2",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "post_file 3",
+              "displayName": "post_file 3",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "post_file 4",
+              "displayName": "post_file 4",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "post_file 5",
+              "displayName": "post_file 5",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "post_file 6",
+              "displayName": "post_file 6",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "watch_video",
+              "displayName": "watch_video",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "long_video(sek)",
+              "displayName": "long_video(sek)",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "type_file",
+              "displayName": "type_file",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "photo",
+                  "value": "photo"
+                },
+                {
+                  "name": "video",
+                  "value": "video"
+                }
+              ],
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "promt_to_model",
+              "displayName": "promt_to_model",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "use_model",
+              "displayName": "use_model",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "permission",
+              "displayName": "permission",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "yes",
+                  "value": "yes"
+                },
+                {
+                  "name": "no",
+                  "value": "no"
+                }
+              ],
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "grade",
+              "displayName": "grade",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "5",
+                  "value": "5"
+                },
+                {
+                  "name": "4",
+                  "value": "4"
+                },
+                {
+                  "name": "3",
+                  "value": "3"
+                },
+                {
+                  "name": "2",
+                  "value": "2"
+                },
+                {
+                  "name": "1",
+                  "value": "1"
+                }
+              ],
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "grade_koment",
+              "displayName": "grade_koment",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Post_cost",
+              "displayName": "Post_cost",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "date_of_posting",
+              "displayName": "date_of_posting",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "dateTime",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "tg",
+              "displayName": "tg",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "dateTime",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "max",
+              "displayName": "max",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "dateTime",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "er24",
+              "displayName": "er24",
+              "required": false,              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "er",
+              "displayName": "er",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "err",
+              "displayName": "err",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "date_modified_by",
+              "displayName": "date_modified_by",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "dateTime",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "date_manual",
+              "displayName": "date_manual",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "options": [
+                {
+                  "name": "True",
+                  "value": "True"
+                },
+                {
+                  "name": "False",
+                  "value": "False"
+                }
+              ],
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "system_update",
+              "displayName": "system_update",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "boolean",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "video_url",
+              "displayName": "video_url",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "audio_url",
+              "displayName": "audio_url",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.1,
+      "position": [
+        1360,
+        4256
+      ],
+      "id": "69d4f950-667b-433b-bf49-5af2b7644a37",
+      "name": "Update record15",
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "base": {
+          "__rl": true,
+          "value": "YOUR_AIRTABLE_BASE_ID",
+          "mode": "id",
+          "cachedResultName": "Content Plan"
+        },
+        "table": {
+          "__rl": true,
+          "value": "YOUR_AIRTABLE_TABLE_ID",
+          "mode": "id",
+          "cachedResultName": "post_plan"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "post_file 6": "={{ [ { url: $('Upload an asset from file data17').item.json.secure_url } ] }}",
+            "id": "={{ $('Edit Fields4').first().json['air table_id'] }}"
+          },
+          "matchingColumns": [
+            "id"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": false
+            },
+            {
+              "id": "id_post",
+              "displayName": "id_post",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "Created",
+              "displayName": "Created",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "Post_name",
+              "displayName": "Post_name",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "post_text",
+              "displayName": "post_text",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "post_file",
+              "displayName": "post_file",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "post_file 2",
+              "displayName": "post_file 2",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "post_file 3",
+              "displayName": "post_file 3",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "post_file 4",
+              "displayName": "post_file 4",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "post_file 5",
+              "displayName": "post_file 5",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "post_file 6",
+              "displayName": "post_file 6",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "watch_video",
+              "displayName": "watch_video",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "long_video(sek)",
+              "displayName": "long_video(sek)",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "type_file",
+              "displayName": "type_file",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "photo",
+                  "value": "photo"
+                },
+                {
+                  "name": "video",
+                  "value": "video"
+                }
+              ],
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "promt_to_model",
+              "displayName": "promt_to_model",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "use_model",
+              "displayName": "use_model",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "permission",
+              "displayName": "permission",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "yes",
+                  "value": "yes"
+                },
+                {
+                  "name": "no",
+                  "value": "no"
+                }
+              ],
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "grade",
+              "displayName": "grade",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "5",
+                  "value": "5"
+                },
+                {
+                  "name": "4",
+                  "value": "4"
+                },
+                {
+                  "name": "3",
+                  "value": "3"
+                },
+                {
+                  "name": "2",
+                  "value": "2"
+                },
+                {
+                  "name": "1",
+                  "value": "1"
+                }
+              ],
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "grade_koment",
+              "displayName": "grade_koment",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Post_cost",
+              "displayName": "Post_cost",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "date_of_posting",
+              "displayName": "date_of_posting",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "dateTime",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "tg",
+              "displayName": "tg",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "dateTime",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "max",
+              "displayName": "max",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "dateTime",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "er24",
+              "displayName": "er24",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "er",
+              "displayName": "er",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "err",
+              "displayName": "err",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "date_modified_by",
+              "displayName": "date_modified_by",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "dateTime",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "date_manual",
+              "displayName": "date_manual",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "options": [
+                {
+                  "name": "True",
+                  "value": "True"
+                },
+                {
+                  "name": "False",
+                  "value": "False"
+                }
+              ],
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "system_update",
+              "displayName": "system_update",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "boolean",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "video_url",
+              "displayName": "video_url",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "audio_url",
+              "displayName": "audio_url",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.1,
+      "position": [
+        1376,
+        4544
+      ],
+      "id": "2626a5ff-9b47-45bf-af7f-c65f1b8e0d50",
+      "name": "Update record16",
+      "retryOnFail": false,
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "0670f752-5ce8-45ba-98d7-44a564065eec",
+              "name": "name",
+              "value": "={{ $('Edit Fields2').item.json.name }}",
+              "type": "string"
+            },
+            {
+              "id": "93273910-68db-4300-9922-b5cb4f9208b8",
+              "name": "ingredients",
+              "value": "={{ $('Edit Fields2').item.json.ingredients }}",
+              "type": "string"
+            },
+            {
+              "id": "893a23ce-44bd-4ebb-b536-89b1dcd3043b",
+              "name": "steps_text",
+              "value": "={{ $('Edit Fields2').item.json.steps_text }}",
+              "type": "string"
+            },
+            {
+              "id": "73ef1a33-d05a-4270-b472-95f7edf86abc",
+              "name": "prompt_ingredients",
+              "value": "={{ $('Edit Fields2').item.json.prompt_ingredients }}",
+              "type": "string"
+            },
+            {
+              "id": "e5875f16-39f4-4fe3-9ba4-f38153f21005",
+              "name": "prompt_step1",
+              "value": "={{ $('Edit Fields2').item.json.prompt_step1 }}",
+              "type": "string"
+            },
+            {
+              "id": "e3524ccd-1be1-4f58-9b58-6ee2fa774893",
+              "name": "prompt_step2",
+              "value": "={{ $('Edit Fields2').item.json.prompt_step2 }}",
+              "type": "string"
+            },
+            {
+              "id": "ea27be44-c665-4f97-b7ac-530dc8b01669",
+              "name": "prompt_step3",
+              "value": "={{ $('Edit Fields2').item.json.prompt_step3 }}",
+              "type": "string"
+            },
+            {
+              "id": "ce3d378b-0698-44fd-bd45-0b50a793bacb",
+              "name": "prompt_step4",
+              "value": "={{ $('Edit Fields2').item.json.prompt_step4 }}",
+              "type": "string"
+            },
+            {
+              "id": "b4ea4791-2ed5-4e17-91dd-02a60ac03d31",
+              "name": "prompt_final",
+              "value": "={{ $('Edit Fields2').item.json.prompt_final }}",
+              "type": "string"
+            },
+            {
+              "id": "dee5fa1e-69ab-475e-876b-21c553f5fbb9",
+              "name": "air table_id",
+              "value": "={{ $json.id }}",
+              "type": "string"
+            },
+            {
+              "id": "c0ba85f7-22ac-4f77-aee9-b2d6e3c36e2c",
+              "name": "system promt txt",
+              "value": "Ты делаешь пост для Telegram-канала с современными рецептами, которые можно приготовить в домашних условиях.\n\nТематика канала:\nКанал посвящён простым, понятным и вкусным домашним рецептам на каждый день: завтраки, обеды, ужины, выпечка, салаты, закуски, супы, десерты и быстрые блюда из доступных продуктов.\nПост должен передавать атмосферу современной домашней кухни: просто, аппетитно, без лишней сложности и ресторанной подачи.\nРецепт должен выглядеть так, будто его легко повторить дома без профессионального оборудования и сложных техник.\nНе используй политику, спорные темы, лишнюю драматизацию и выдуманные истории о блюде.\n\nГлавное правило:\nИтоговый текст, включая HTML-теги, пробелы и переносы строк, не должен превышать 1000 символов.\nНикогда не превышай 1000 символов.\n\nАлгоритм:\n1. Сначала внимательно прочитай исходный рецепт.\n2. Исправь грамматические, пунктуационные и стилистические ошибки.\n3. Если текст слишком длинный, перепиши его более лаконично.\n4. Если в рецепте есть нестыковки, исправь их: убери противоречия, согласуй ингредиенты и способ приготовления, исправь очевидные ошибки в действиях, порядке шагов, количестве или единицах измерения.\n5. Не меняй основное блюдо и не добавляй сложные ингредиенты, которых нет в рецепте.\n6. Сначала полностью сформируй пост.\n7. Посчитай количество символов.\n8. Если больше 1000 — сократи вступление и описание приготовления.\n9. Если всё ещё больше 1000 — сократи способ приготовления до самых важных действий.\n10. Финальный текст должен быть ≤ 1000 символов.\n\nСтиль поста:\n— Современный, простой, домашний.\n— Дружелюбный тон, обращение на «ты».\n— Простые слова, без сложных кулинарных терминов.\n— Пост должен звучать понятно, аккуратно и аппетитно.\n— Не делай текст слишком ресторанным, глянцевым или рекламным.\n— Не используй чрезмерно восторженные фразы вроде «невероятный шедевр» или «идеальный вкус, который покорит всех».\n— Лучше писать проще: «быстрый ужин», «простая выпечка к чаю», «сытный обед», «готовится без лишней возни», «из обычных продуктов», «подойдёт для всей семьи».\n\nОбязательная структура поста:\n\nПервый абзац:\n<b>Название блюда</b>\n\nЗатем короткое вступление:\n— «простой вариант для домашнего ужина»\n— «быстрое блюдо из доступных продуктов»\n— «отличный рецепт к чаю»\n— «сытный обед без лишней возни»\n— «домашний рецепт на каждый день»\n— «вкусное блюдо, которое легко повторить»\nНо не повторяй одну и ту же формулировку в каждом посте.\n\nЗатем:\nИнгредиенты:\nКаждый ингредиент с новой строки.\nПеред каждым ингредиентом обязательно ставь символ «—».\nНе используй <ul>, <ol>, <li>.\n\nЗатем:\nКак готовить:\nКраткий способ приготовления.\nКаждый этап приготовления должен быть пронумерован обычным текстовым списком: 1. 2. 3. и так далее.\nКаждый этап начинай с новой строки.\nПиши чёткую инструкцию без вариантов.\nНе пиши «можно», «по желанию», если это не важно.\nНе растягивай текст.\nЕсли в исходном рецепте шаги написаны хаотично, перепиши их в правильном логическом порядке.\n\nВ конце:\nКороткий CTA или финальная фраза.\nПримеры:\n— Сохрани рецепт, чтобы приготовить на ужин.\n— Подавай горячим — так вкуснее.\n— Отличный вариант для домашнего обеда.\n— Просто, сытно и без лишней возни.\n— Сохрани, если любишь домашние рецепты.\n— Хороший вариант к чаю.\n\nПравило разделов:\n— Каждый раздел отделяй одной пустой строкой.\n— Пустая строка должна быть между названием, вступлением, ингредиентами, способом приготовления и финальной фразой.\n— Не делай пост сплошным текстом.\n\nHTML-правила:\n— Название блюда обязательно через <b>.\n— Блоки «Ингредиенты» и «Как готовить» с новой строки.\n— Используй реальные переносы строк.\n— Между каждым смысловым разделом обязательно оставляй одну пустую строку.\n— Выводи чистый HTML.\n— Не добавляй символы перед HTML-тегами.\n— Не используй Markdown.\n— Не используй JSON.\n— Не экранируй HTML-теги.\n— Не используй <ul>, <ol>, <li>.\n— Не используй кавычки вокруг всего поста.\n— Не добавляй пояснения вне поста.\n\nЭмодзи:\n— Используй 1–4 эмодзи.\n— Эмодзи должны быть уместными для еды и домашней кухни.\n— Не используй слишком много ярких или случайных эмодзи.\n— Подходящие эмодзи: 🍲 🥔 🥣 🍞 🍰 🥗 🍳 🧀 🍅 🫖\n\nЗапрещено:\n— Превышать 1000 символов.\n— Добавлять JSON.\n— Добавлять Markdown.\n— Использовать списки HTML.\n— Писать политический или идеологический контекст.\n— Упоминать ГОСТ, историю блюда или происхождение рецепта, если этого нет в исходных данных.\n— Придумывать факты о блюде, если они не указаны в исходном рецепте.\n— Делать слишком длинное вступление.\n— Добавлять сложные ингредиенты, которых нет в рецепте.\n— Менять основное блюдо на другое.\n— Оставлять явные ошибки, повторы, нестыковки и грамматические ошибки из исходного рецепта.\n— Использовать слишком сложный, ресторанный или пафосный стиль.\n— Писать ингредиенты без символа «—».\n— Писать этапы приготовления без нумерации.\n— Склеивать разделы без пустых строк.\n\nЕсли рецепт обычный домашний — подавай его как «домашний рецепт на каждый день».\nЕсли блюдо быстрое — подавай его как «быстрый ужин» или «без лишней возни».\nЕсли это выпечка или сладкое — подавай как «к чаю» или «простая домашняя выпечка».\nЕсли это салат или закуска — подавай как «для домашнего стола» или «быстрая закуска».\nЕсли это суп или горячее — подавай как «сытный обед» или «простое горячее блюдо».\nЕсли в рецепте есть ошибки — исправь их незаметно и верни уже чистый, логичный и готовый пост.\n\nФормат ответа:\nВерни только готовый Telegram-пост в чистом HTML.\nБез JSON.\nБез пояснений.\nБез Markdown.\nБез кавычек.",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        256,
+        3968
+      ],
+      "id": "4199ae1b-dc31-4f92-a608-eaf62a1f76c0",
+      "name": "Edit Fields4"
+    },
+    {
+      "parameters": {
+        "operation": "create",
+        "base": {
+          "__rl": true,
+          "value": "YOUR_AIRTABLE_BASE_ID",
+          "mode": "id",
+          "cachedResultName": "Content Plan"
+        },
+        "table": {
+          "__rl": true,
+          "value": "YOUR_AIRTABLE_TABLE_ID",
+          "mode": "id",
+          "cachedResultName": "post_plan"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Post_name": "={{ $('Edit Fields2').item.json.name }}",
+            "post_file": "={{ [ { url: $('Upload an asset from file data13').item.json.secure_url } ] }}",
+            "type_file": "mix_photo",
+            "use_model": "gpt2",
+            "Post_cost": 0.36,
+            "promt_to_model (image)": "={{ $('Code in JavaScript2').item.json.prompt_ingredients }}{{ $('Code in JavaScript2').item.json.prompt_step1 }}{{ $('Code in JavaScript2').item.json.prompt_step2 }}{{ $('Code in JavaScript2').item.json.prompt_step3 }}{{ $('Code in JavaScript2').item.json.prompt_step4 }}{{ $('Code in JavaScript2').item.json.prompt_final }}",
+            "system_promt_to_imeg": "={{ $('Edit Fields7').item.json['system promt img'] }}",
+            "Chanel": "gotovimdoma_max"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "id_post",
+              "displayName": "id_post",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "Created",
+              "displayName": "Created",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "Post_name",
+              "displayName": "Post_name",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "post_text",
+              "displayName": "post_text",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "grade_koment",
+              "displayName": "grade_koment",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Chanel",
+              "displayName": "Chanel",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "gotovimdoma_max",
+                  "value": "gotovimdoma_max"
+                },
+                {
+                  "name": "gotovim_sssr",
+                  "value": "gotovim_sssr"
+                },
+                {
+                  "name": "receptynadom",
+                  "value": "receptynadom"
+                }
+              ],
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "post_file",
+              "displayName": "post_file",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "post_file 2",
+              "displayName": "post_file 2",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "post_file 3",
+              "displayName": "post_file 3",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "post_file 4",
+              "displayName": "post_file 4",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "post_file 5",
+              "displayName": "post_file 5",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "post_file 6",
+              "displayName": "post_file 6",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "watch_video",
+              "displayName": "watch_video",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "long_video(sek)",
+              "displayName": "long_video(sek)",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "type_file",
+              "displayName": "type_file",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "photo",
+                  "value": "photo"
+                },
+                {
+                  "name": "video",
+                  "value": "video"
+                },
+                {
+                  "name": "mix_photo",
+                  "value": "mix_photo"
+                }
+              ],
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "promt_to_model (image)",
+              "displayName": "promt_to_model (image)",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "promt_to_model (llm)",
+              "displayName": "promt_to_model (llm)",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "system_promt_to_imeg",
+              "displayName": "system_promt_to_imeg",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "system_promt_to_LLM",
+              "displayName": "system_promt_to_LLM",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "use_model",
+              "displayName": "use_model",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "permission",
+              "displayName": "permission",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "yes",
+                  "value": "yes"
+                },
+                {
+                  "name": "no",
+                  "value": "no"
+                }
+              ],
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "grade",
+              "displayName": "grade",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "5",
+                  "value": "5"
+                },
+                {
+                  "name": "4",
+                  "value": "4"
+                },
+                {
+                  "name": "3",
+                  "value": "3"
+                },
+                {
+                  "name": "2",
+                  "value": "2"
+                },
+                {
+                  "name": "1",
+                  "value": "1"
+                }
+              ],
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Post_cost",
+              "displayName": "Post_cost",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "date_of_posting",
+              "displayName": "date_of_posting",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "dateTime",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "tg",
+              "displayName": "tg",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "dateTime",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "max",
+              "displayName": "max",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "dateTime",
+              "readOnly": false,              "removed": true
+            },
+            {
+              "id": "er24",
+              "displayName": "er24",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "er",
+              "displayName": "er",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "err",
+              "displayName": "err",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "date_modified_by",
+              "displayName": "date_modified_by",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "dateTime",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "date_manual",
+              "displayName": "date_manual",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "options": [
+                {
+                  "name": "True",
+                  "value": "True"
+                },
+                {
+                  "name": "False",
+                  "value": "False"
+                }
+              ],
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "video_url",
+              "displayName": "video_url",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.1,
+      "position": [
+        1760,
+        3408
+      ],
+      "id": "d1e1d7d4-445c-4eea-8ef8-e875ca569315",
+      "name": "Create a record"
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "0 30 2 * * *"
+            },
+            {
+              "field": "cronExpression",
+              "expression": "0 30 3 * * *"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        -1824,
+        3632
+      ],
+      "id": "a463528d-7798-4b3b-8a1e-9248893b83bf",
+      "name": "Schedule Trigger4"
+    },
+    {
+      "parameters": {
+        "chatId": "YOUR_TELEGRAM_ADMIN_CHAT_ID",
+        "text": "=Ошибка в  агенте №1 (генерация 6 фото @gorovim_max\nПроверьте биллинг ключа",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        -576,
+        3776
+      ],
+      "id": "30629581-50fd-465e-89dd-a1a11fc23fbd",
+      "name": "Send a text message4"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Преобразуй Рецепт:\n{{ $('Get many rows3').item.json.post_text }}",
+        "options": {
+          "systemMessage": "={{ $json['system promt txt'] }}"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3,
+      "position": [
+        560,
+        4752
+      ],
+      "id": "2502991e-79bb-4e80-84aa-048a8c65f5bf",
+      "name": "Post agent 1",
+      "retryOnFail": true,
+      "waitBetweenTries": 4000,
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "base": {
+          "__rl": true,
+          "value": "YOUR_AIRTABLE_BASE_ID",
+          "mode": "id",
+          "cachedResultName": "Content Plan"
+        },
+        "table": {
+          "__rl": true,
+          "value": "YOUR_AIRTABLE_TABLE_ID",
+          "mode": "id",
+          "cachedResultName": "post_plan"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "id": "={{ $('Edit Fields4').first().json['air table_id'] }}",
+            "post_text": "={{ $json.output }}",
+            "system_promt_to_LLM": "={{ $('Edit Fields4').item.json['system promt txt'] }}"
+          },
+          "matchingColumns": [
+            "id"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": false
+            },
+            {
+              "id": "id_post",
+              "displayName": "id_post",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "Created",
+              "displayName": "Created",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "Post_name",
+              "displayName": "Post_name",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "post_text",
+              "displayName": "post_text",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "grade_koment",
+              "displayName": "grade_koment",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Chanel",
+              "displayName": "Chanel",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "gotovimdoma_max",
+                  "value": "gotovimdoma_max"
+                },
+                {
+                  "name": "gotovim_sssr",
+                  "value": "gotovim_sssr"
+                },
+                {
+                  "name": "receptynadom",
+                  "value": "receptynadom"
+                }
+              ],
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "post_file",
+              "displayName": "post_file",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "post_file 2",
+              "displayName": "post_file 2",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "post_file 3",
+              "displayName": "post_file 3",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "post_file 4",
+              "displayName": "post_file 4",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "post_file 5",
+              "displayName": "post_file 5",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "post_file 6",
+              "displayName": "post_file 6",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "watch_video",
+              "displayName": "watch_video",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "long_video(sek)",
+              "displayName": "long_video(sek)",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "type_file",
+              "displayName": "type_file",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "photo",
+                  "value": "photo"
+                },
+                {
+                  "name": "video",
+                  "value": "video"
+                },
+                {
+                  "name": "mix_photo",
+                  "value": "mix_photo"
+                }
+              ],
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "promt_to_model (image)",
+              "displayName": "promt_to_model (image)",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "promt_to_model (llm)",
+              "displayName": "promt_to_model (llm)",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "system_promt_to_imeg",
+              "displayName": "system_promt_to_imeg",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "system_promt_to_LLM",
+              "displayName": "system_promt_to_LLM",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "use_model",
+              "displayName": "use_model",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "permission",
+              "displayName": "permission",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "yes",
+                  "value": "yes"
+                },
+                {
+                  "name": "no",
+                  "value": "no"
+                }
+              ],
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "grade",
+              "displayName": "grade",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "5",
+                  "value": "5"
+                },
+                {
+                  "name": "4",
+                  "value": "4"
+                },
+                {
+                  "name": "3",
+                  "value": "3"
+                },
+                {
+                  "name": "2",
+                  "value": "2"
+                },
+                {
+                  "name": "1",
+                  "value": "1"
+                }
+              ],
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Post_cost",
+              "displayName": "Post_cost",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "date_of_posting",
+              "displayName": "date_of_posting",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "dateTime",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "tg",
+              "displayName": "tg",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "dateTime",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "max",
+              "displayName": "max",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "dateTime",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "er24",
+              "displayName": "er24",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "er",
+              "displayName": "er",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "err",
+              "displayName": "err",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "date_modified_by",
+              "displayName": "date_modified_by",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "dateTime",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "date_manual",
+              "displayName": "date_manual",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "options": [
+                {
+                  "name": "True",
+                  "value": "True"
+                },
+                {
+                  "name": "False",
+                  "value": "False"
+                }
+              ],
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "video_url",
+              "displayName": "video_url",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.1,
+      "position": [
+        1248,
+        4752
+      ],
+      "id": "3f5c4b7b-2189-4c21-a28b-5d88ccebb956",
+      "name": "Update record17",
+      "retryOnFail": false,
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "chatId": "YOUR_TELEGRAM_ADMIN_CHAT_ID",
+        "text": "=Ошибка в  агенте №2 (генерация 6 фото @gorovim_max\nПроверьте биллинг ключа",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        864,
+        4848
+      ],
+      "id": "ab65def3-2684-4b4e-a1f2-ae68c5d8ea38",
+      "name": "Send a text message5"
+    },
+    {
+      "parameters": {
+        "content": "# генерация поста с 6 фото  (OpenAi)  /",
+        "height": 112,
+        "width": 1040,
+        "color": 6
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -1792,
+        3456
+      ],
+      "id": "cee717f9-e1fb-47cd-a382-053cdd6219bf",
+      "name": "Sticky Note3"
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "YOUR_QA_WORKFLOW_ID",
+          "mode": "id",
+          "cachedResultName": "ПРОВЕРКА ПОСТОВ - @gotovimdoma_max с помощью ИИ"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "mode": "each",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.3,
+      "position": [
+        1568,
+        4752
+      ],
+      "id": "b0f4500e-5a05-4d01-a735-3a514a33446b",
+      "name": "Call 'ПРОВЕРКА ПОСТОВ с помощью ИИ'1",
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-5",
+          "mode": "list",
+          "cachedResultName": "gpt-5"
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        -976,
+        3872
+      ],
+      "id": "41ac2840-dc55-46ef-97cd-6a48c1e1e5ac",
+      "name": "OpenAI Chat Model2"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-5",
+          "mode": "list",
+          "cachedResultName": "gpt-5"
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        560,
+        4944
+      ],
+      "id": "ae1aef1e-7d1e-468c-8117-d59ddfbc28bc",
+      "name": "OpenAI Chat Model3"
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "YOUR_QA_WORKFLOW_ID",
+          "mode": "id",
+          "cachedResultName": "ПРОВЕРКА ПОСТОВ - @gotovimdoma_max с помощью ИИ"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "mode": "each",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.3,
+      "position": [
+        1360,
+        2400
+      ],
+      "id": "01594fa8-661b-4f49-8169-a13d65f00372",
+      "name": "Call 'ПРОВЕРКА ПОСТОВ - @gotovimdoma_max с помощью ИИ'"
+    }
+  ],
+  "connections": {
+    "If5": {
+      "main": [
+        [
+          {
+            "node": "system promt to img",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Send a text message3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get many rows5": {
+      "main": [
+        [
+          {
+            "node": "If5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge5": {
+      "main": [
+        [
+          {
+            "node": "Create a record1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Post agent 3": {
+      "main": [
+        [
+          {
+            "node": "Merge5",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Problem with GoogleAIStudio2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "done foto2": {
+      "main": [
+        [
+          {
+            "node": "Call 'ПРОВЕРКА ПОСТОВ - @gotovimdoma_max с помощью ИИ'",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait4": {
+      "main": [
+        [
+          {
+            "node": "system promt to Txt",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Upload an asset from file data1": {
+      "main": [
+        [
+          {
+            "node": "Merge5",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Create a record1": {
+      "main": [
+        [
+          {
+            "node": "done foto2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger1": {
+      "main": [
+        [
+          {
+            "node": "Get many rows5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Promt for Img",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Post agent 3",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "Upload an asset from file data1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAi": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Problem with GoogleAIStudio2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "system promt to img": {
+      "main": [
+        [
+          {
+            "node": "Promt for Img",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Promt for Img": {
+      "main": [
+        [
+          {
+            "node": "OpenAi",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Wait4",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error 3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "system promt to Txt": {
+      "main": [
+        [
+          {
+            "node": "Post agent 3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent2": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript2",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Send a text message4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get many rows3": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields2": {
+      "main": [
+        [          {
+            "node": "NanaBanano14",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript23": {
+      "main": [
+        [
+          {
+            "node": "Upload an asset from file data13",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Upload an asset from file data13": {
+      "main": [
+        [
+          {
+            "node": "Update a row2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript24": {
+      "main": [
+        [
+          {
+            "node": "Upload an asset from file data17",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript25": {
+      "main": [
+        [
+          {
+            "node": "Upload an asset from file data14",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Upload an asset from file data14": {
+      "main": [
+        [
+          {
+            "node": "Update record12",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript26": {
+      "main": [
+        [
+          {
+            "node": "Upload an asset from file data15",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Upload an asset from file data15": {
+      "main": [
+        [
+          {
+            "node": "Update record13",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript27": {
+      "main": [
+        [
+          {
+            "node": "Upload an asset from file data16",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Upload an asset from file data16": {
+      "main": [
+        [
+          {
+            "node": "Update record14",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript2": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update a row2": {
+      "main": [
+        [
+          {
+            "node": "Create a record",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields7": {
+      "main": [
+        [
+          {
+            "node": "AI Agent2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "NanaBanano13": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript25",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "NanaBanano14": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript23",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "NanaBanano15": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript26",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "NanaBanano16": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript27",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "NanaBanano17": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript24",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Upload an asset from file data17": {
+      "main": [
+        [
+          {
+            "node": "Update record16",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript28": {
+      "main": [
+        [
+          {
+            "node": "Upload an asset from file data18",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Upload an asset from file data18": {
+      "main": [
+        [
+          {
+            "node": "Update record15",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "NanaBanano18": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript28",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields4": {
+      "main": [
+        [
+          {
+            "node": "NanaBanano13",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "NanaBanano15",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "NanaBanano16",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "NanaBanano18",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "NanaBanano17",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Post agent 1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create a record": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger4": {
+      "main": [
+        [
+          {
+            "node": "Get many rows3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a text message4": {
+      "main": [
+        []
+      ]
+    },
+    "Post agent 1": {
+      "main": [
+        [
+          {
+            "node": "Update record17",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Send a text message5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update record17": {
+      "main": [
+        [
+          {
+            "node": "Call 'ПРОВЕРКА ПОСТОВ с помощью ИИ'1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model2": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent2",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model3": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Post agent 1",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  }
+}
