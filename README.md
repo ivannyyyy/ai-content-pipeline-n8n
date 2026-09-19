@@ -47,28 +47,60 @@ Airtable (approved content)
 
 ## Content formats
 
-The publishing layer supports:
+The pipeline is designed for:
 
 - single image + text;
 - video + text;
 - multi-image carousel (up to six images).
+
+## Published workflow
+
+### 01 — Content Generation
+
+The sanitized public workflow is available at:
+
+[`workflows/01_content_generation.json`](workflows/01_content_generation.json)
+
+It contains the source-selection, LLM transformation, media-generation, Cloudinary upload, Airtable preparation, source-state update, operational alerting, and quality-control handoff logic.
+
+Detailed setup and architecture notes:
+
+[`docs/content-generation.md`](docs/content-generation.md)
+
+Deployment/configuration checklist:
+
+[`config/content-generation.example.json`](config/content-generation.example.json)
 
 ## Repository structure
 
 ```text
 workflows/
   01_content_generation.json
-  02_ai_quality_control.json
-  03_publishing.json
+
+docs/
+  content-generation.md
+
+config/
+  content-generation.example.json
+
 README.md
+```
+
+Planned incremental additions:
+
+```text
+workflows/02_ai_quality_control.json
+workflows/03_publishing.json
 ```
 
 ## Security
 
 Production credentials are not stored in this repository. After importing the workflows into n8n, configure your own credentials for Supabase, Airtable, OpenAI/LLM providers, Cloudinary, Telegram, and MAX.
 
-Instance-specific credential references, webhook identifiers, private chat IDs, and Airtable resource identifiers are removed or replaced with placeholders in the public workflow exports.
+Instance-specific credential references, workflow identifiers, private chat IDs, webhook identifiers, and Airtable resource identifiers are removed or replaced with placeholders in the public workflow exports.
 
 ## Status
 
-The project is being published incrementally. Workflow exports and documentation will be added in separate commits to keep the repository history aligned with the actual system architecture.
+The project is being published incrementally in small logical commits so that the repository history reflects the actual system architecture.
+
+Current public stage: **Content Generation workflow + setup documentation**.

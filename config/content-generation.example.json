@@ -1,0 +1,39 @@
+{
+  "_note": "Reference deployment checklist only. n8n does not load this file automatically.",
+  "source": {
+    "supabase_table": "YOUR_SUPABASE_TABLE",
+    "eligible_status": "new"
+  },
+  "airtable": {
+    "base_id": "YOUR_AIRTABLE_BASE_ID",
+    "table_id": "YOUR_AIRTABLE_TABLE_ID"
+  },
+  "quality_control": {
+    "workflow_id": "YOUR_QA_WORKFLOW_ID"
+  },
+  "telegram": {
+    "admin_chat_id": "YOUR_TELEGRAM_ADMIN_CHAT_ID"
+  },
+  "channel": {
+    "name": "YOUR_CHANNEL_NAME"
+  },
+  "runtime": {
+    "timezone": "YOUR_TIMEZONE",
+    "single_image_schedule": [
+      "YOUR_CRON_EXPRESSION_1",
+      "YOUR_CRON_EXPRESSION_2"
+    ],
+    "multi_image_schedule": [
+      "YOUR_CRON_EXPRESSION_1",
+      "YOUR_CRON_EXPRESSION_2"
+    ]
+  },
+  "credentials_to_bind_in_n8n": [
+    "Supabase",
+    "Airtable",
+    "OpenAI_or_other_LLM_provider",
+    "Cloudinary",
+    "Telegram",
+    "Image_generation_provider"
+  ]
+}
