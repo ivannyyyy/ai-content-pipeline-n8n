@@ -7,7 +7,7 @@ A three-stage content automation pipeline built in n8n for collecting, transform
 The project separates the content lifecycle into three independent workflows:
 
 1. **Content generation** — takes pre-collected posts from Supabase, filters eligible records, rewrites them for the target channel, generates visual content, and stores prepared posts in Airtable.
-2. **AI quality control** — validates prepared posts before publication, checks formatting and text quality, and writes an approval decision plus review comments back to Airtable.
+2. **AI quality control** — validates prepared posts before publication, checks media, formatting and text quality, and writes an approval decision plus review comments back to Airtable.
 3. **Publishing** — selects approved posts according to the publication schedule and publishes them to Telegram and MAX, supporting single-image, video, and multi-image posts.
 
 ## Architecture
@@ -23,7 +23,7 @@ Airtable (content plan)
    |
    v
 [02 AI Quality Control]
-   |  validation / moderation / approval
+   |  deterministic checks / AI moderation / approval
    v
 Airtable (approved content)
    |
@@ -41,6 +41,7 @@ Airtable (approved content)
 - **Airtable** — content plan and workflow state
 - **LLM agents** — rewriting and quality control
 - **Image generation / media processing** — visual assets for posts
+- **AI image analysis** — visual quality control for multi-image content
 - **Cloudinary** — media storage
 - **Telegram Bot API** — Telegram publishing
 - **MAX API** — MAX publishing
@@ -53,32 +54,46 @@ The pipeline is designed for:
 - video + text;
 - multi-image carousel (up to six images).
 
-## Published workflow
+## Published workflows
 
 ### 01 — Content Generation
 
-The sanitized public workflow is available at:
+Sanitized workflow:
 
 [`workflows/01_content_generation.json`](workflows/01_content_generation.json)
 
-It contains the source-selection, LLM transformation, media-generation, Cloudinary upload, Airtable preparation, source-state update, operational alerting, and quality-control handoff logic.
+It contains source selection, LLM transformation, media generation, Cloudinary upload, Airtable preparation, source-state updates, operational alerting, and handoff to quality control.
 
-Detailed setup and architecture notes:
+Documentation:
 
 [`docs/content-generation.md`](docs/content-generation.md)
 
-Deployment/configuration checklist:
+Configuration checklist:
 
 [`config/content-generation.example.json`](config/content-generation.example.json)
+
+### 02 — AI Quality Control
+
+Sanitized workflow:
+
+[`workflows/02_ai_quality_control.json`](workflows/02_ai_quality_control.json)
+
+It acts as a pre-publication quality gate: deterministic media/text checks run first, then AI moderation reviews text and, for multi-image content, the generated visuals. Approval state and review comments are written back to Airtable.
+
+Documentation:
+
+[`docs/ai-quality-control.md`](docs/ai-quality-control.md)
 
 ## Repository structure
 
 ```text
 workflows/
   01_content_generation.json
+  02_ai_quality_control.json
 
 docs/
   content-generation.md
+  ai-quality-control.md
 
 config/
   content-generation.example.json
@@ -86,10 +101,9 @@ config/
 README.md
 ```
 
-Planned incremental additions:
+Planned incremental addition:
 
 ```text
-workflows/02_ai_quality_control.json
 workflows/03_publishing.json
 ```
 
@@ -103,4 +117,4 @@ Instance-specific credential references, workflow identifiers, private chat IDs,
 
 The project is being published incrementally in small logical commits so that the repository history reflects the actual system architecture.
 
-Current public stage: **Content Generation workflow + setup documentation**.
+Current public stage: **Content Generation + AI Quality Control, with setup documentation**.
