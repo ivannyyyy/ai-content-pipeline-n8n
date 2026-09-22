@@ -1,29 +1,29 @@
 # AI Content Pipeline for n8n
 
-A three-stage content automation pipeline built in n8n for collecting, transforming, reviewing, and publishing social-media posts.
+A three-stage AI content automation system built in n8n for generating, reviewing, and publishing social-media content.
 
 ## Overview
 
-The project separates the content lifecycle into three independent workflows:
+The project separates the content lifecycle into three connected workflows:
 
-1. **Content generation** — takes pre-collected posts from Supabase, filters eligible records, rewrites them for the target channel, generates visual content, and stores prepared posts in Airtable.
-2. **AI quality control** — validates prepared posts before publication, checks media, formatting and text quality, and writes an approval decision plus review comments back to Airtable.
-3. **Publishing** — selects approved posts according to the publication schedule and publishes them to Telegram and MAX, supporting single-image, video, and multi-image posts.
+1. **Content Generation** — takes source records from Supabase, rewrites content with LLMs, generates visual assets, stores media, and creates prepared posts in Airtable.
+2. **AI Quality Control** — applies deterministic validation and AI moderation to text and images before publication.
+3. **Publishing** — selects approved Airtable records and publishes them to Telegram and MAX, then records delivery state back in Airtable.
 
 ## Architecture
 
-```text
+~~~text
 Supabase
    |
    v
 [01 Content Generation]
-   |  rewrite / relevance / visual generation
+   |  LLM rewrite / media generation
    v
 Airtable (content plan)
    |
    v
 [02 AI Quality Control]
-   |  deterministic checks / AI moderation / approval
+   |  deterministic checks / AI moderation
    v
 Airtable (approved content)
    |
@@ -32,89 +32,137 @@ Airtable (approved content)
    +------> Telegram
    |
    +------> MAX
-```
+~~~
 
 ## Main components
 
 - **n8n** — workflow orchestration
 - **Supabase** — source content storage
 - **Airtable** — content plan and workflow state
-- **LLM agents** — rewriting and quality control
-- **Image generation / media processing** — visual assets for posts
-- **AI image analysis** — visual quality control for multi-image content
+- **OpenAI / LLM nodes** — text generation and moderation
+- **AI image analysis** — visual quality control
+- **Image generation / media processing** — content assets
 - **Cloudinary** — media storage
 - **Telegram Bot API** — Telegram publishing
 - **MAX API** — MAX publishing
 
 ## Content formats
 
-The pipeline is designed for:
+The pipeline supports:
 
 - single image + text;
 - video + text;
-- multi-image carousel (up to six images).
+- multi-image carousel / media group with up to six images.
 
 ## Published workflows
 
 ### 01 — Content Generation
 
-Sanitized workflow:
+Workflow:
 
-[`workflows/01_content_generation.json`](workflows/01_content_generation.json)
-
-It contains source selection, LLM transformation, media generation, Cloudinary upload, Airtable preparation, source-state updates, operational alerting, and handoff to quality control.
+[workflows/01_content_generation.json](workflows/01_content_generation.json)
 
 Documentation:
 
-[`docs/content-generation.md`](docs/content-generation.md)
+[docs/content-generation.md](docs/content-generation.md)
 
 Configuration checklist:
 
-[`config/content-generation.example.json`](config/content-generation.example.json)
+[config/content-generation.example.json](config/content-generation.example.json)
+
+This stage handles source selection, LLM transformation, media generation, Cloudinary upload, Airtable preparation, source-state updates, error notifications, and handoff to quality control.
 
 ### 02 — AI Quality Control
 
-Sanitized workflow:
+Workflow:
 
-[`workflows/02_ai_quality_control.json`](workflows/02_ai_quality_control.json)
-
-It acts as a pre-publication quality gate: deterministic media/text checks run first, then AI moderation reviews text and, for multi-image content, the generated visuals. Approval state and review comments are written back to Airtable.
+[workflows/02_ai_quality_control.json](workflows/02_ai_quality_control.json)
 
 Documentation:
 
-[`docs/ai-quality-control.md`](docs/ai-quality-control.md)
+[docs/ai-quality-control.md](docs/ai-quality-control.md)
+
+This stage acts as a pre-publication quality gate. Deterministic checks run first, followed by AI review of text and, for multi-image content, the generated visuals. The result is written back to Airtable.
+
+### 03 — Publishing
+
+Workflow:
+
+[workflows/03_publishing.json](workflows/03_publishing.json)
+
+Documentation:
+
+[docs/publishing.md](docs/publishing.md)
+
+This stage selects approved content, routes it by media type, publishes to Telegram and MAX, and records platform-specific publication timestamps back in Airtable.
+
+## End-to-end state flow
+
+~~~text
+source record
+   |
+   v
+generated content
+   |
+   v
+AI-reviewed content
+   |
+   +--> rejected ----> review / correction
+   |
+   v
+approved
+   |
+   +--> Telegram ----> tg timestamp
+   |
+   +--> MAX ---------> max timestamp
+~~~
+
+The pipeline keeps deterministic rules, AI decisions, content state, and delivery state explicit instead of hiding them inside a single monolithic agent.
+
+## Quick setup
+
+1. Import the three JSON workflows into n8n.
+2. Configure your own credentials for Supabase, Airtable, OpenAI/LLM providers, Cloudinary, Telegram, and MAX.
+3. Replace every **YOUR_...** placeholder.
+4. Review project-specific table names, channel values, prompts, schedules, and caption templates.
+5. Connect the Content Generation workflow to the AI Quality Control workflow.
+6. Test each stage independently.
+7. Test the complete generation → review → publishing flow.
+8. Enable production schedules only after all state transitions work correctly.
 
 ## Repository structure
 
-```text
+~~~text
 workflows/
   01_content_generation.json
   02_ai_quality_control.json
+  03_publishing.json
 
 docs/
   content-generation.md
   ai-quality-control.md
+  publishing.md
 
 config/
   content-generation.example.json
 
 README.md
-```
-
-Planned incremental addition:
-
-```text
-workflows/03_publishing.json
-```
+~~~
 
 ## Security
 
-Production credentials are not stored in this repository. After importing the workflows into n8n, configure your own credentials for Supabase, Airtable, OpenAI/LLM providers, Cloudinary, Telegram, and MAX.
+Production credentials are not stored in this repository.
 
-Instance-specific credential references, workflow identifiers, private chat IDs, webhook identifiers, and Airtable resource identifiers are removed or replaced with placeholders in the public workflow exports.
+The public workflow exports remove or replace deployment-specific credential references, private chat identifiers, workflow identifiers, webhook identifiers, and Airtable resource identifiers where required.
 
-## Status
+After import, configure your own credentials and review all project-specific destinations before enabling any workflow.
 
-The project is being published incrementally in small logical commits so that the repository history reflects the actual system architecture.
+## Project status
 
-Current public stage: **Content Generation + AI Quality Control, with setup documentation**.
+**Complete public portfolio version.**
+
+The repository now contains the full three-stage automation architecture:
+
+**Content Generation → AI Quality Control → Publishing**
+
+The original production system was built as a working content pipeline; this repository is a sanitized public version intended to demonstrate workflow architecture, integrations, state management, AI-assisted quality control, and multi-platform publishing.
